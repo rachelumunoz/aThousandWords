@@ -9,13 +9,12 @@ import java.util.Date;
 public class ImageThought {
 	private String mThought;
 	private Date mDate;
-	private boolean mThoughComplete;
+	private boolean mThoughtComplete;
 	private int mImage;
 
-	public ImageThought(String thought, int image){
+	public ImageThought(String thought){
 		mDate = new Date();
 		mThought = thought;
-		mImage = image;
 	}
 
 	public String getThought() {
@@ -34,19 +33,12 @@ public class ImageThought {
 		mDate = date;
 	}
 
-	public boolean isThoughComplete() {
-		return mThoughComplete;
+	public boolean isThoughtComplete() {
+		return mThoughtComplete;
 	}
 
-	public void setThoughComplete(boolean thoughComplete) {
-		mThoughComplete = thoughComplete;
+	public void setThoughtComplete(boolean thoughtComplete) {
+		mThoughtComplete = thoughtComplete;
 	}
 
-	public int getImage() {
-		return mImage;
-	}
-
-	public void setImage(int image) {
-		mImage = image;
-	}
 }
