@@ -9,10 +9,10 @@
     <EditText
         android:id="@+id/imageThought_text"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="123dp"
+        android:layout_marginTop="47dp"
         android:ems="10"
         android:inputType="textMultiLine"
         app:layout_constraintHorizontal_bias="0.0"
