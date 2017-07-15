@@ -6,9 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -37,7 +35,7 @@ public class ImageThoughtsFragment extends Fragment {
 		mImageThoughtEditText.setText(mImageThought.getThought());
 
 		mImageThoughtDateTextView = (TextView) view.findViewById(R.id.imageThought_date);
-		mImageThoughtDateTextView.setText(mImageThought.getDate().toString());
+		mImageThoughtDateTextView.setText(mImageThought.getFormattedDate());
 
 
 		return view;

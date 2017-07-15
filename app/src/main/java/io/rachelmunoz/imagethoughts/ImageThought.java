@@ -1,5 +1,7 @@
 package io.rachelmunoz.imagethoughts;
 
+import android.text.format.DateFormat;
+
 import java.util.Date;
 
 /**
@@ -39,6 +41,13 @@ public class ImageThought {
 
 	public void setThoughtComplete(boolean thoughtComplete) {
 		mThoughtComplete = thoughtComplete;
+	}
+
+	public String getFormattedDate(){
+		Date date = getDate();
+		String dateString = DateFormat.format("EEE, MMM d, ''yy", date).toString();
+
+		return dateString;
 	}
 
 }
