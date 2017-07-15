@@ -8,6 +8,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ public class ImageThoughtsFragment extends Fragment {
 
 	private EditText mImageThoughtEditText;
 	private TextView mImageThoughtDateTextView;
+	private CheckBox mImageThoughtCompleteCheckBox;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +58,13 @@ public class ImageThoughtsFragment extends Fragment {
 		mImageThoughtDateTextView = (TextView) view.findViewById(R.id.imageThought_date);
 		mImageThoughtDateTextView.setText(mImageThought.getFormattedDate());
 
+		mImageThoughtCompleteCheckBox = (CheckBox) view.findViewById(R.id.imageThought_complete);
+		mImageThoughtCompleteCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+				mImageThought.setThoughtComplete(b);
+			}
+		});
 
 		return view;
 	}
