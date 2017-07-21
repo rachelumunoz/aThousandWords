@@ -1,7 +1,10 @@
 package io.rachelmunoz.imagethoughts;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -10,9 +13,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
 import static android.os.Environment.getExternalStoragePublicDirectory;
@@ -47,11 +53,16 @@ public class ImageThoughtsFragment extends Fragment {
 	private ImageView mImageThoughtImageView;
 	private Button mCameraButton;
 
+	private Context context;
+	private File mPhotoFile;
+
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		mImageThought = new ImageThought(getString(R.string.thought_text_default));
+//		mPhotoFile = getPhotoFile(getActivity(), mImageThought);
+
 	}
 
 	@Override
@@ -90,10 +101,36 @@ public class ImageThoughtsFragment extends Fragment {
 
 
 		mCameraButton = (Button) view.findViewById(R.id.camera_button);
+
+		final Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+		boolean canTakePhoto = takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null;
+		mCameraButton.setEnabled(canTakePhoto);
+
 		mCameraButton.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View view) {
-				dispatchTakePictureIntent();
+				Uri uri = FileProvider.getUriForFile(getActivity(), "io.rachelmunoz.imagethoughts.fileprovider", mPhotoFile);
+
+//				takePictureIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
+//
+//				List<ResolveInfo> cameraActivities = getActivity().getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
+//
+//				for (ResolveInfo activity : cameraActivities){
+//					getActivity().grantUriPermission(activity.activityInfo.packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//				}
+
+				mPhotoFile = null;
+				mPhotoFile = getPhotoFile(getActivity(), mImageThought);
+
+				if (mPhotoFile != null) {
+					Uri photoURI = FileProvider.getUriForFile(getActivity(),
+							"io.rachelmunoz.imagethoughts.fileprovider",
+							mPhotoFile);
+					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+					startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+				}
+
 			}
 		});
 
@@ -102,22 +139,9 @@ public class ImageThoughtsFragment extends Fragment {
 		return view;
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-			Bundle extras = data.getExtras();
-			Bitmap imageBitmap = (Bitmap) extras.get("data");
-			mImageThoughtImageView.setImageBitmap(imageBitmap);
-
-		}
-	}
-
-	private void dispatchTakePictureIntent() {
-		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-		if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-			startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-		}
+	private File getPhotoFile(Context context, ImageThought imageThought){
+		File filesDir = context.getApplicationContext().getFilesDir();
+		return new File(filesDir, imageThought.getPhotoFilename());
 	}
 
 

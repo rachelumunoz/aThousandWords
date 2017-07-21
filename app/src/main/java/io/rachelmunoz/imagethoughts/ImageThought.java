@@ -3,6 +3,7 @@ package io.rachelmunoz.imagethoughts;
 import android.text.format.DateFormat;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by rachelmunoz on 7/14/17.
@@ -13,10 +14,12 @@ public class ImageThought {
 	private Date mDate;
 	private boolean mThoughtComplete;
 	private int mImage;
+	private UUID mId;
 
 	public ImageThought(String thought){
 		mDate = new Date();
 		mThought = thought;
+		mId = UUID.randomUUID();
 	}
 
 	public String getThought() {
@@ -49,5 +52,15 @@ public class ImageThought {
 
 		return dateString;
 	}
+
+	public UUID getId() {
+		return mId;
+	}
+
+	public String getPhotoFilename(){
+		return "IMG_" + getId().toString() + ".jpg";
+	}
+
+
 
 }

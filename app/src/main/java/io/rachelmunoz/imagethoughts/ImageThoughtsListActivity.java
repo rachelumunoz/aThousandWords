@@ -1,14 +1,16 @@
 package io.rachelmunoz.imagethoughts;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
-public class ImageThoughtsActivity extends SingleFragmentActivity {
+/**
+ * Created by rachelmunoz on 7/21/17.
+ */
+
+public class ImageThoughtsListActivity extends SingleFragmentActivity {
 
 	@Override
 	public Fragment createFragment() {
-		return new ImageThoughtsFragment();
+		return new ImageThoughtsListFragment();
 	}
 }
