@@ -1,5 +1,6 @@
 package io.rachelmunoz.imagethoughts;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -51,10 +52,13 @@ public class ImageThoughtsListFragment extends Fragment {
 
 		@Override
 		public void onClick(View view) {
-			Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "Clicked " + mImageThought.getId(), Toast.LENGTH_SHORT).show();
+
+			Intent intent = ImageThoughtsActivity.newIntent(getActivity(), mImageThought.getId());
+			startActivity(intent);
 		}
 
-		public void bind(ImageThought imageThought){
+		public void bind(ImageThought imageThought){ // binds data each imageThought to UI
 			mImageThought = imageThought;
 			mImageThoughtDate.setText(imageThought.getFormattedDate());
 		}
