@@ -1,5 +1,6 @@
 package io.rachelmunoz.imagethoughts;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -33,9 +37,26 @@ public class ImageThoughtsListFragment extends Fragment {
 		return view;
 	}
 
-	private class ImageThoughtHolder extends RecyclerView.ViewHolder {
+	private class ImageThoughtHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+		private ImageView mImageThoughtImageView;
+		private ImageThought mImageThought;
+		private TextView mImageThoughtDate;
+
 		public ImageThoughtHolder(LayoutInflater inflater, ViewGroup parent){
 			super(inflater.inflate(R.layout.list_item_image_thought, parent, false));
+			itemView.setOnClickListener(this);
+			mImageThoughtImageView = (ImageView) itemView.findViewById(R.id.image_recycler);
+			mImageThoughtDate = (TextView) itemView.findViewById(R.id.image_date_recycler);
+		}
+
+		@Override
+		public void onClick(View view) {
+			Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_SHORT).show();
+		}
+
+		public void bind(ImageThought imageThought){
+			mImageThought = imageThought;
+			mImageThoughtDate.setText(imageThought.getFormattedDate());
 		}
 	}
 
@@ -55,7 +76,8 @@ public class ImageThoughtsListFragment extends Fragment {
 
 		@Override
 		public void onBindViewHolder(ImageThoughtHolder holder, int position) {
-
+			ImageThought imageThought = mImageThoughts.get(position);
+			holder.bind(imageThought);
 		}
 
 		@Override

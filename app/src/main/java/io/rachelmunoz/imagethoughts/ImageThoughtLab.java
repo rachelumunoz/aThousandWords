@@ -17,7 +17,7 @@ public class ImageThoughtLab {
 	private ImageThoughtLab(Context context){
 		mImageThoughts = new ArrayList<>();
 
-		for (int i = 0; i < 10; i++){
+		for (int i = 0; i < 100; i++){
 			ImageThought imageThought = new ImageThought("New image thought" + i);
 			imageThought.setThoughtComplete(i % 2 == 0);
 			mImageThoughts.add(imageThought);
