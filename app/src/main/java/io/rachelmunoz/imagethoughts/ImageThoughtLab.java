@@ -24,7 +24,7 @@ public class ImageThoughtLab {
 		}
 	}
 
-	public ImageThoughtLab get(Context context) {
+	public static ImageThoughtLab get(Context context) {
 		if (sImageThoughtLab == null) {
 			sImageThoughtLab = new ImageThoughtLab(context);
 		}

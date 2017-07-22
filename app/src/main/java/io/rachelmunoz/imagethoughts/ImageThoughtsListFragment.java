@@ -10,13 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 /**
  * Created by rachelmunoz on 7/21/17.
  */
 
 public class ImageThoughtsListFragment extends Fragment {
 	private RecyclerView mRecyclerView;
-
+	private ImageThoughtAdapter mAdapter;
 
 	@Nullable
 	@Override
@@ -24,10 +26,50 @@ public class ImageThoughtsListFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_image_thoughts_list, container, false);
 
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler_view);
-		mRecyclerView.setLayoutManager( new LinearLayoutManager(getActivity()));
+		mRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 2));
+
+		updateUI();
 
 		return view;
 	}
 
+	private class ImageThoughtHolder extends RecyclerView.ViewHolder {
+		public ImageThoughtHolder(LayoutInflater inflater, ViewGroup parent){
+			super(inflater.inflate(R.layout.list_item_image_thought, parent, false));
+		}
+	}
+
+	private class ImageThoughtAdapter extends RecyclerView.Adapter<ImageThoughtHolder>{
+		private List<ImageThought> mImageThoughts;
+
+		public ImageThoughtAdapter(List<ImageThought> imageThoughts){
+			mImageThoughts = imageThoughts;
+		}
+
+		@Override
+		public ImageThoughtHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+			LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+
+			return new ImageThoughtHolder(layoutInflater, parent);
+		}
+
+		@Override
+		public void onBindViewHolder(ImageThoughtHolder holder, int position) {
+
+		}
+
+		@Override
+		public int getItemCount() {
+			return mImageThoughts.size();
+		}
+	}
+
+	private void updateUI(){
+		ImageThoughtLab imageThoughtLab = ImageThoughtLab.get(getActivity());
+		List<ImageThought> imageThoughts = imageThoughtLab.getImageThoughts();
+
+		mAdapter = new ImageThoughtAdapter(imageThoughts);
+		mRecyclerView.setAdapter(mAdapter);
+	}
 
 }
