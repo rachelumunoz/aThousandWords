@@ -1,28 +1,25 @@
 package io.rachelmunoz.imagethoughts;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
-public class ImageThoughtsActivity extends AppCompatActivity {
+import java.util.UUID;
+
+public class ImageThoughtsActivity extends SingleFragmentActivity {
+	private static final String EXTRA_IMAGE_THOUGHT_ID = "io.rachelmunoz.imagethoughts.extra_imagethought_id";
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_image_thoughts);
+	public Fragment createFragment() {
+		UUID id = (UUID) getIntent().getSerializableExtra(EXTRA_IMAGE_THOUGHT_ID);
+		ImageThoughtsFragment fragment = ImageThoughtsFragment.newInstance(id);
 
-		FragmentManager fm = getSupportFragmentManager();
-		Fragment fragment = fm.findFragmentById(R.id.image_thoughts_fragment_container);
+		return fragment;
+	}
 
-		if (fragment == null){
-			fragment = new ImageThoughtsFragment();
-
-			fm.beginTransaction()
-				.add(R.id.image_thoughts_fragment_container, fragment)
-				.commit();
-
-		}
-
+	public static Intent newIntent(Context context, UUID id){
+		Intent intent = new Intent(context, ImageThoughtsActivity.class);
+		intent.putExtra(EXTRA_IMAGE_THOUGHT_ID, id);
+		return intent;
 	}
 }
