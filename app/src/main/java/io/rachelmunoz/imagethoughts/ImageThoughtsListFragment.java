@@ -52,8 +52,6 @@ public class ImageThoughtsListFragment extends Fragment {
 
 		@Override
 		public void onClick(View view) {
-			Toast.makeText(getActivity(), "Clicked " + mImageThought.getId(), Toast.LENGTH_SHORT).show();
-
 			Intent intent = ImageThoughtsActivity.newIntent(getActivity(), mImageThought.getId());
 			startActivity(intent);
 		}

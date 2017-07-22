@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
 import static android.os.Environment.getExternalStoragePublicDirectory;
@@ -44,6 +45,7 @@ import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class ImageThoughtsFragment extends Fragment {
 
+	static final String ARG_IMAGE_THOUGHT_ID = "imageThought_id";
 	static final int REQUEST_IMAGE_CAPTURE = 1;
 	private ImageThought mImageThought;
 
@@ -53,16 +55,22 @@ public class ImageThoughtsFragment extends Fragment {
 	private ImageView mImageThoughtImageView;
 	private Button mCameraButton;
 
-	private Context context;
-	private File mPhotoFile;
-
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mImageThought = new ImageThought(getString(R.string.thought_text_default));
-//		mPhotoFile = getPhotoFile(getActivity(), mImageThought);
+		UUID imageThoughtId = (UUID) getArguments().getSerializable(ARG_IMAGE_THOUGHT_ID);
+		mImageThought = ImageThoughtLab.get(getActivity()).getImageThought(imageThoughtId);
 
+	}
+
+	public static ImageThoughtsFragment newInstance(UUID id){
+		Bundle args = new Bundle();
+		args.putSerializable(ARG_IMAGE_THOUGHT_ID, id);
+
+		ImageThoughtsFragment fragment = new ImageThoughtsFragment();
+		fragment.setArguments(args);
+		return fragment;
 	}
 
 	@Override
@@ -101,47 +109,9 @@ public class ImageThoughtsFragment extends Fragment {
 
 
 		mCameraButton = (Button) view.findViewById(R.id.camera_button);
-
-		final Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-		boolean canTakePhoto = takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null;
-		mCameraButton.setEnabled(canTakePhoto);
-
-		mCameraButton.setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View view) {
-				Uri uri = FileProvider.getUriForFile(getActivity(), "io.rachelmunoz.imagethoughts.fileprovider", mPhotoFile);
-
-//				takePictureIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
-//
-//				List<ResolveInfo> cameraActivities = getActivity().getPackageManager().queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
-//
-//				for (ResolveInfo activity : cameraActivities){
-//					getActivity().grantUriPermission(activity.activityInfo.packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//				}
-
-				mPhotoFile = null;
-				mPhotoFile = getPhotoFile(getActivity(), mImageThought);
-
-				if (mPhotoFile != null) {
-					Uri photoURI = FileProvider.getUriForFile(getActivity(),
-							"io.rachelmunoz.imagethoughts.fileprovider",
-							mPhotoFile);
-					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-					startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-				}
-
-			}
-		});
-
 		mImageThoughtImageView = (ImageView) view.findViewById(R.id.imageThought_image);
 
 		return view;
-	}
-
-	private File getPhotoFile(Context context, ImageThought imageThought){
-		File filesDir = context.getApplicationContext().getFilesDir();
-		return new File(filesDir, imageThought.getPhotoFilename());
 	}
 
 
