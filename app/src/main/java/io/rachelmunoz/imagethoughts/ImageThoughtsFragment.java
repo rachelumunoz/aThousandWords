@@ -63,6 +63,12 @@ public class ImageThoughtsFragment extends Fragment {
 
 	}
 
+	@Override
+	public void onPause() {
+		super.onPause();
+		ImageThoughtLab.get(getActivity()).updateImageThought(mImageThought);
+	}
+
 	public static ImageThoughtsFragment newInstance(UUID id){
 		Bundle args = new Bundle();
 		args.putSerializable(ARG_IMAGE_THOUGHT_ID, id);
