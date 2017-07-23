@@ -16,6 +16,12 @@ public class ImageThought {
 	private int mImage;
 	private UUID mId;
 
+	public ImageThought(){
+		mDate = new Date();
+		mThought = "Default text";
+		mId = UUID.randomUUID();
+	}
+
 	public ImageThought(String thought){
 		mDate = new Date();
 		mThought = thought;
@@ -56,6 +62,8 @@ public class ImageThought {
 	public UUID getId() {
 		return mId;
 	}
+
+
 
 	public String getPhotoFilename(){
 		return "IMG_" + getId().toString() + ".jpg";

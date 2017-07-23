@@ -17,11 +17,11 @@ public class ImageThoughtLab {
 	private ImageThoughtLab(Context context){
 		mImageThoughts = new ArrayList<>();
 
-		for (int i = 0; i < 100; i++){
-			ImageThought imageThought = new ImageThought("New image thought" + i);
-			imageThought.setThoughtComplete(i % 2 == 0);
-			mImageThoughts.add(imageThought);
-		}
+//		for (int i = 0; i < 100; i++){
+//			ImageThought imageThought = new ImageThought("New image thought" + i);
+//			imageThought.setThoughtComplete(i % 2 == 0);
+//			mImageThoughts.add(imageThought);
+//		}
 	}
 
 	public static ImageThoughtLab get(Context context) {
@@ -31,6 +31,10 @@ public class ImageThoughtLab {
 
 		return sImageThoughtLab;
 
+	}
+
+	public void addImageThought(ImageThought imageThought){
+		mImageThoughts.add(imageThought);
 	}
 
 	public List<ImageThought> getImageThoughts(){
