@@ -9,6 +9,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,6 +28,32 @@ public class ImageThoughtsListFragment extends Fragment {
 	private RecyclerView mRecyclerView;
 	private ImageThoughtAdapter mAdapter;
 
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		updateUI();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+			case R.id.new_entry:
+				ImageThought imageThought = new ImageThought();
+				ImageThoughtLab.get(getActivity()).addImageThought(imageThought);
+				Intent intent = ImageThoughtsActivity.newIntent(getActivity(), imageThought.getId());
+				startActivity(intent);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +65,12 @@ public class ImageThoughtsListFragment extends Fragment {
 		updateUI();
 
 		return view;
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.fragment_image_thoughts_list, menu);
 	}
 
 	private class ImageThoughtHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -86,14 +121,23 @@ public class ImageThoughtsListFragment extends Fragment {
 		public int getItemCount() {
 			return mImageThoughts.size();
 		}
+
+		public void setImageThoughts(List<ImageThought>imageThoughts){
+			mImageThoughts = imageThoughts;
+		}
 	}
 
 	private void updateUI(){
 		ImageThoughtLab imageThoughtLab = ImageThoughtLab.get(getActivity());
 		List<ImageThought> imageThoughts = imageThoughtLab.getImageThoughts();
 
-		mAdapter = new ImageThoughtAdapter(imageThoughts);
-		mRecyclerView.setAdapter(mAdapter);
+		if (mAdapter == null){
+			mAdapter = new ImageThoughtAdapter(imageThoughts);
+			mRecyclerView.setAdapter(mAdapter);
+		} else {
+			mAdapter.setImageThoughts(imageThoughts);
+			mAdapter.notifyDataSetChanged();
+		}
 	}
 
 }
