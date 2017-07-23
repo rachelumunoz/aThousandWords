@@ -28,6 +28,11 @@ public class ImageThought {
 		mId = UUID.randomUUID();
 	}
 
+	public ImageThought(UUID id){
+		mId = id;
+		mDate = new Date();
+	}
+
 	public String getThought() {
 		return mThought;
 	}
