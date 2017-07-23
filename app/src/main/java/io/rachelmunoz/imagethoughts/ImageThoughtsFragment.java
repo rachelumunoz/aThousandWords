@@ -46,7 +46,6 @@ import static android.os.Environment.getExternalStoragePublicDirectory;
 public class ImageThoughtsFragment extends Fragment {
 
 	static final String ARG_IMAGE_THOUGHT_ID = "imageThought_id";
-	static final int REQUEST_IMAGE_CAPTURE = 1;
 	private ImageThought mImageThought;
 
 	private EditText mImageThoughtEditText;
@@ -62,6 +61,12 @@ public class ImageThoughtsFragment extends Fragment {
 		UUID imageThoughtId = (UUID) getArguments().getSerializable(ARG_IMAGE_THOUGHT_ID);
 		mImageThought = ImageThoughtLab.get(getActivity()).getImageThought(imageThoughtId);
 
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		ImageThoughtLab.get(getActivity()).updateImageThought(mImageThought);
 	}
 
 	public static ImageThoughtsFragment newInstance(UUID id){
@@ -100,6 +105,7 @@ public class ImageThoughtsFragment extends Fragment {
 		mImageThoughtDateTextView.setText(mImageThought.getFormattedDate());
 
 		mImageThoughtCompleteCheckBox = (CheckBox) view.findViewById(R.id.imageThought_complete);
+		mImageThoughtCompleteCheckBox.setChecked(mImageThought.isThoughtComplete());
 		mImageThoughtCompleteCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -113,6 +119,8 @@ public class ImageThoughtsFragment extends Fragment {
 
 		return view;
 	}
+
+
 
 
 }
