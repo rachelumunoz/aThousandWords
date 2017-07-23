@@ -105,6 +105,7 @@ public class ImageThoughtsFragment extends Fragment {
 		mImageThoughtDateTextView.setText(mImageThought.getFormattedDate());
 
 		mImageThoughtCompleteCheckBox = (CheckBox) view.findViewById(R.id.imageThought_complete);
+		mImageThoughtCompleteCheckBox.setChecked(mImageThought.isThoughtComplete());
 		mImageThoughtCompleteCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
