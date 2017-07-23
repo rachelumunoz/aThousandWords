@@ -46,7 +46,6 @@ import static android.os.Environment.getExternalStoragePublicDirectory;
 public class ImageThoughtsFragment extends Fragment {
 
 	static final String ARG_IMAGE_THOUGHT_ID = "imageThought_id";
-	static final int REQUEST_IMAGE_CAPTURE = 1;
 	private ImageThought mImageThought;
 
 	private EditText mImageThoughtEditText;
@@ -113,6 +112,8 @@ public class ImageThoughtsFragment extends Fragment {
 
 		return view;
 	}
+
+
 
 
 }
