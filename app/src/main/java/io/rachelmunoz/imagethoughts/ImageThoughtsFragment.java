@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,7 +47,9 @@ import static android.os.Environment.getExternalStoragePublicDirectory;
 public class ImageThoughtsFragment extends Fragment {
 
 	static final String ARG_IMAGE_THOUGHT_ID = "imageThought_id";
+	private static final int REQUEST_PHOTO = 0;
 	private ImageThought mImageThought;
+	private File mPhotoFile;
 
 	private EditText mImageThoughtEditText;
 	private TextView mImageThoughtDateTextView;
@@ -60,7 +63,7 @@ public class ImageThoughtsFragment extends Fragment {
 
 		UUID imageThoughtId = (UUID) getArguments().getSerializable(ARG_IMAGE_THOUGHT_ID);
 		mImageThought = ImageThoughtLab.get(getActivity()).getImageThought(imageThoughtId);
-
+		mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(mImageThought);
 	}
 
 	@Override
@@ -113,10 +116,44 @@ public class ImageThoughtsFragment extends Fragment {
 			}
 		});
 
-
+		PackageManager packageManager = getActivity().getPackageManager();
 		mCameraButton = (Button) view.findViewById(R.id.camera_button);
-		mImageThoughtImageView = (ImageView) view.findViewById(R.id.imageThought_image);
+		final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
+		boolean canTakePhoto = mPhotoFile != null && captureImage.resolveActivity(packageManager) != null;
+		mCameraButton.setEnabled(canTakePhoto);
+
+		mCameraButton.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View view) {
+				Uri uri =
+						FileProvider.getUriForFile(
+							getActivity(),
+							"io.rachelmunoz.imagethoughts.fileprovider",
+							mPhotoFile
+						);
+
+				captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
+				List<ResolveInfo> cameraActivities =
+									getActivity()
+									.getPackageManager()
+									.queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
+
+				for (ResolveInfo activity : cameraActivities){
+					getActivity()
+					.grantUriPermission(
+						activity.activityInfo.packageName,
+						uri,
+						Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+					);
+				}
+
+				startActivityForResult(captureImage, REQUEST_PHOTO);
+			}
+		});
+
+		mImageThoughtImageView = (ImageView) view.findViewById(R.id.imageThought_image);
 		return view;
 	}
 

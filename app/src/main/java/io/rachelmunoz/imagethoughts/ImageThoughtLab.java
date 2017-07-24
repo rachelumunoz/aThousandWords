@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -79,6 +80,11 @@ public class ImageThoughtLab {
 		} finally {
 			cursor.close();
 		}
+	}
+
+	public File getPhotoFile(ImageThought imageThought){
+		File filesDir = mContext.getFilesDir();
+		return new File(filesDir, imageThought.getPhotoFilename());
 	}
 
 	public void updateImageThought(ImageThought imageThought){
