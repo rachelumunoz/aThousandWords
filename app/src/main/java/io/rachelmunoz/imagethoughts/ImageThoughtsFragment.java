@@ -154,10 +154,31 @@ public class ImageThoughtsFragment extends Fragment {
 		});
 
 		mImageThoughtImageView = (ImageView) view.findViewById(R.id.imageThought_image);
+		updatePhotoView();
 		return view;
 	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode != Activity.RESULT_OK){
+			return;
+		}
 
+		if (requestCode == REQUEST_PHOTO){
+			Uri uri = FileProvider.getUriForFile(getActivity(), "io.rachelmunoz.imagethoughts.fileprovider", mPhotoFile);
+			getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
+			updatePhotoView();
+		}
+	}
+
+	private void updatePhotoView(){
+		if (mPhotoFile == null || !mPhotoFile.exists()){
+			mImageThoughtImageView.setImageBitmap(null);
+		} else {
+			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+			mImageThoughtImageView.setImageBitmap(bitmap);
+		}
+	}
 
 }

@@ -1,6 +1,7 @@
 package io.rachelmunoz.imagethoughts;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -78,9 +80,14 @@ public class ImageThoughtsListFragment extends Fragment {
 		private ImageThought mImageThought;
 		private TextView mImageThoughtDate;
 
+		private File mPhotoFile;
+
 		public ImageThoughtHolder(LayoutInflater inflater, ViewGroup parent){
 			super(inflater.inflate(R.layout.list_item_image_thought, parent, false));
 			itemView.setOnClickListener(this);
+
+
+
 			mImageThoughtImageView = (ImageView) itemView.findViewById(R.id.image_recycler);
 			mImageThoughtDate = (TextView) itemView.findViewById(R.id.image_date_recycler);
 		}
@@ -94,6 +101,16 @@ public class ImageThoughtsListFragment extends Fragment {
 		public void bind(ImageThought imageThought){ // binds data each imageThought to UI
 			mImageThought = imageThought;
 			mImageThoughtDate.setText(imageThought.getFormattedDate());
+
+			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(mImageThought);
+
+			// repeats from ImageThoughtsFragment
+			if (mPhotoFile == null || !mPhotoFile.exists()){
+				return;
+			} else {
+				Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+				mImageThoughtImageView.setImageBitmap(bitmap);
+			}
 		}
 	}
 
@@ -139,5 +156,6 @@ public class ImageThoughtsListFragment extends Fragment {
 			mAdapter.notifyDataSetChanged();
 		}
 	}
+
 
 }
