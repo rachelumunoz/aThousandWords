@@ -62,7 +62,7 @@ public class ImageThoughtsListFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_image_thoughts_list, container, false);
 
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler_view);
-		mRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 2));
+		mRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 3));
 
 		updateUI();
 
@@ -86,10 +86,8 @@ public class ImageThoughtsListFragment extends Fragment {
 			super(inflater.inflate(R.layout.list_item_image_thought, parent, false));
 			itemView.setOnClickListener(this);
 
-
-
 			mImageThoughtImageView = (ImageView) itemView.findViewById(R.id.image_recycler);
-			mImageThoughtDate = (TextView) itemView.findViewById(R.id.image_date_recycler);
+//			mImageThoughtDate = (TextView) itemView.findViewById(R.id.image_date_recycler);
 		}
 
 		@Override
@@ -100,7 +98,7 @@ public class ImageThoughtsListFragment extends Fragment {
 
 		public void bind(ImageThought imageThought){ // binds data each imageThought to UI
 			mImageThought = imageThought;
-			mImageThoughtDate.setText(imageThought.getFormattedDate());
+//			mImageThoughtDate.setText(imageThought.getFormattedDate());
 
 			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(mImageThought);
 
