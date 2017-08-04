@@ -7,4 +7,6 @@
     <string name="hide_count">Hide Count</string>
     <string name="show_count">Show Count</string>
     <string name="count_format">%1$d entries</string>
+
+    <string name="delete_image_thought">Delete</string>
 </resources>

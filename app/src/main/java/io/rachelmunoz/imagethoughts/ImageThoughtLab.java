@@ -45,6 +45,8 @@ public class ImageThoughtLab {
 		mDatabase.insert(ImageThoughtTable.NAME, null, values);
 	}
 
+
+
 	public List<ImageThought> getImageThoughts(){
 		List<ImageThought> imageThoughts = new ArrayList<>();
 
@@ -96,6 +98,12 @@ public class ImageThoughtLab {
 				ImageThoughtTable.Cols.UUID + " = ?",
 				new String[] { uuidString }
 		);
+	}
+
+	public void deleteImageThought(ImageThought imageThought){
+		String uuidString = imageThought.getId().toString();
+
+		mDatabase.delete(ImageThoughtTable.NAME, ImageThoughtTable.Cols.UUID  + " = ?", new String[] {uuidString});
 	}
 
 	private ImageThoughtCursorWrapper queryImageThoughts(String whereClause, String[] whereArgs){
