@@ -146,7 +146,7 @@ public class ImageThoughtsListFragment extends Fragment {
 		ImageThoughtLab imageThoughtLab = ImageThoughtLab.get(getActivity());
 		List<ImageThought> imageThoughts = imageThoughtLab.getImageThoughts();
 
-		if (mAdapter == null){
+		if (mAdapter == null){ //on Activity recreate?
 			mAdapter = new ImageThoughtAdapter(imageThoughts);
 			mRecyclerView.setAdapter(mAdapter);
 		} else {
