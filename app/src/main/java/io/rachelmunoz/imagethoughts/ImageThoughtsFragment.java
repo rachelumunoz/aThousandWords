@@ -197,7 +197,7 @@ public class ImageThoughtsFragment extends Fragment {
 
 	private void updatePhotoView(){
 		if (mPhotoFile == null || !mPhotoFile.exists()){
-			mImageThoughtImageView.setImageBitmap(null);
+			mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
 		} else {
 			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
 			mImageThoughtImageView.setImageBitmap(bitmap);

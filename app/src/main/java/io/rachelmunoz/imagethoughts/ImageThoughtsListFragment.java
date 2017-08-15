@@ -104,11 +104,13 @@ public class ImageThoughtsListFragment extends Fragment {
 
 			// repeats from ImageThoughtsFragment
 			if (mPhotoFile == null || !mPhotoFile.exists()){
-				return;
+				mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
 			} else {
 				Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
 				mImageThoughtImageView.setImageBitmap(bitmap);
 			}
+
+
 		}
 	}
 
