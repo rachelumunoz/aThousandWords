@@ -89,8 +89,6 @@ public class ImageThoughtsFragment extends Fragment {
 		}
 	}
 
-
-
 	@Override
 	public void onPause() {
 		super.onPause();
