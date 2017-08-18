@@ -3,4 +3,5 @@
         android:id="@+id/image_recycler"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:layout_margin="8dp"/>
