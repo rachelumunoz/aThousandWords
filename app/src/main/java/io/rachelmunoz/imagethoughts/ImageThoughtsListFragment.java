@@ -1,5 +1,6 @@
 package io.rachelmunoz.imagethoughts;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
@@ -29,6 +30,17 @@ import java.util.List;
 public class ImageThoughtsListFragment extends Fragment {
 	private RecyclerView mRecyclerView;
 	private ImageThoughtAdapter mAdapter;
+	private Callbacks mCallbacks;
+
+	public interface Callbacks {
+		void onImageThoughtSelected(ImageThought imageThought);
+	}
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		mCallbacks = (Callbacks) context;
+	}
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,13 +55,20 @@ public class ImageThoughtsListFragment extends Fragment {
 	}
 
 	@Override
+	public void onDetach() {
+		super.onDetach();
+		mCallbacks = null;
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()){
 			case R.id.new_entry:
 				ImageThought imageThought = new ImageThought();
 				ImageThoughtLab.get(getActivity()).addImageThought(imageThought);
-				Intent intent = ImageThoughtsActivity.newIntent(getActivity(), imageThought.getId());
-				startActivity(intent);
+
+				updateUI();
+				mCallbacks.onImageThoughtSelected(imageThought);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -87,18 +106,15 @@ public class ImageThoughtsListFragment extends Fragment {
 			itemView.setOnClickListener(this);
 
 			mImageThoughtImageView = (ImageView) itemView.findViewById(R.id.image_recycler);
-//			mImageThoughtDate = (TextView) itemView.findViewById(R.id.image_date_recycler);
 		}
 
 		@Override
 		public void onClick(View view) {
-			Intent intent = ImageThoughtsActivity.newIntent(getActivity(), mImageThought.getId());
-			startActivity(intent);
+			mCallbacks.onImageThoughtSelected(mImageThought);
 		}
 
 		public void bind(ImageThought imageThought){ // binds data each imageThought to UI
 			mImageThought = imageThought;
-//			mImageThoughtDate.setText(imageThought.getFormattedDate());
 
 			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(mImageThought);
 
@@ -144,7 +160,7 @@ public class ImageThoughtsListFragment extends Fragment {
 		}
 	}
 
-	private void updateUI(){
+	public void updateUI(){
 		ImageThoughtLab imageThoughtLab = ImageThoughtLab.get(getActivity());
 		List<ImageThought> imageThoughts = imageThoughtLab.getImageThoughts();
 
