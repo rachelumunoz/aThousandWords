@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 
 import java.util.UUID;
 
-public class ImageThoughtsActivity extends SingleFragmentActivity {
+public class ImageThoughtsActivity extends SingleFragmentActivity implements ImageThoughtsFragment.Callbacks {
 	private static final String EXTRA_IMAGE_THOUGHT_ID = "io.rachelmunoz.imagethoughts.extra_imagethought_id";
 
 	@Override
@@ -22,4 +22,11 @@ public class ImageThoughtsActivity extends SingleFragmentActivity {
 		intent.putExtra(EXTRA_IMAGE_THOUGHT_ID, id);
 		return intent;
 	}
+
+	@Override
+	public void onImageThoughtUpdated(ImageThought imageThought) {
+
+	}
 }
+
+

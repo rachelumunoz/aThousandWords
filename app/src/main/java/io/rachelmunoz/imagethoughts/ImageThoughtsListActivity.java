@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by rachelmunoz on 7/21/17.
  */
 
-public class ImageThoughtsListActivity extends SingleFragmentActivity implements ImageThoughtsListFragment.Callbacks {
+public class ImageThoughtsListActivity extends SingleFragmentActivity implements ImageThoughtsListFragment.Callbacks, ImageThoughtsFragment.Callbacks {
 
 	@Override
 	public Fragment createFragment() {
@@ -33,5 +33,12 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 					.replace(R.id.detail_fragment_container, newDetail)
 					.commit();
 		}
+	}
+
+	@Override
+	public void onImageThoughtUpdated(ImageThought imageThought) {
+		ImageThoughtsListFragment listFragment = (ImageThoughtsListFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.image_thoughts_fragment_container);
+		listFragment.updateUI();
 	}
 }

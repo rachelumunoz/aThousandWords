@@ -60,6 +60,27 @@ public class ImageThoughtsFragment extends Fragment {
 	private ImageView mImageThoughtImageView;
 	private Button mCameraButton;
 
+	private Callbacks mCallbacks;
+
+	public interface Callbacks {
+		void onImageThoughtUpdated(ImageThought imageThought);
+	}
+
+	public static ImageThoughtsFragment newInstance(UUID id){
+		Bundle args = new Bundle();
+		args.putSerializable(ARG_IMAGE_THOUGHT_ID, id);
+
+		ImageThoughtsFragment fragment = new ImageThoughtsFragment();
+		fragment.setArguments(args);
+		return fragment;
+	}
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		mCallbacks = (Callbacks) context;
+	}
+
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,6 +89,18 @@ public class ImageThoughtsFragment extends Fragment {
 		UUID imageThoughtId = (UUID) getArguments().getSerializable(ARG_IMAGE_THOUGHT_ID);
 		mImageThought = ImageThoughtLab.get(getActivity()).getImageThought(imageThoughtId);
 		mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(mImageThought);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		ImageThoughtLab.get(getActivity()).updateImageThought(mImageThought);
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mCallbacks = null;
 	}
 
 	@Override
@@ -87,21 +120,6 @@ public class ImageThoughtsFragment extends Fragment {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		ImageThoughtLab.get(getActivity()).updateImageThought(mImageThought);
-	}
-
-	public static ImageThoughtsFragment newInstance(UUID id){
-		Bundle args = new Bundle();
-		args.putSerializable(ARG_IMAGE_THOUGHT_ID, id);
-
-		ImageThoughtsFragment fragment = new ImageThoughtsFragment();
-		fragment.setArguments(args);
-		return fragment;
 	}
 
 	@Override
@@ -191,8 +209,14 @@ public class ImageThoughtsFragment extends Fragment {
 			Uri uri = FileProvider.getUriForFile(getActivity(), "io.rachelmunoz.imagethoughts.fileprovider", mPhotoFile);
 			getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
+			updateImageThought();
 			updatePhotoView();
 		}
+	}
+
+	private void updateImageThought(){  // when stuff changed in RecyclerView
+		ImageThoughtLab.get(getActivity()).updateImageThought(mImageThought);
+		mCallbacks.onImageThoughtUpdated(mImageThought);
 	}
 
 	private void updatePhotoView(){

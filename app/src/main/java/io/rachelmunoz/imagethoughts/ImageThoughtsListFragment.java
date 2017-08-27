@@ -160,7 +160,7 @@ public class ImageThoughtsListFragment extends Fragment {
 		}
 	}
 
-	private void updateUI(){
+	public void updateUI(){
 		ImageThoughtLab imageThoughtLab = ImageThoughtLab.get(getActivity());
 		List<ImageThought> imageThoughts = imageThoughtLab.getImageThoughts();
 
