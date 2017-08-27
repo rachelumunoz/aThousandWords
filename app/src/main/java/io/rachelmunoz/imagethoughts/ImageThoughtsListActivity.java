@@ -13,4 +13,9 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity {
 	public Fragment createFragment() {
 		return new ImageThoughtsListFragment();
 	}
+
+	@Override
+	protected int getLayoutResId() {
+		return R.layout.activity_twopane;
+	}
 }
