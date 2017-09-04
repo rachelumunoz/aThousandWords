@@ -124,6 +124,7 @@ public class ImageThoughtLab {
 		ContentValues values = new ContentValues();
 		values.put(ImageThoughtTable.Cols.UUID, imageThought.getId().toString());
 		values.put(ImageThoughtTable.Cols.THOUGHT, imageThought.getThought());
+		values.put(ImageThoughtTable.Cols.TITLE, imageThought.getTitle());
 		values.put(ImageThoughtTable.Cols.DATE, imageThought.getDate().getTime());
 		values.put(ImageThoughtTable.Cols.COMPLETE, imageThought.isThoughtComplete() ? 1 : 0);
 

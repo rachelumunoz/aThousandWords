@@ -24,11 +24,11 @@ public class ImageThought {
 		mTitle = "Title";
 	}
 
-	public ImageThought(String thought, String title){
+	public ImageThought(String thought){
 		mDate = new Date();
 		mThought = thought;
 		mId = UUID.randomUUID();
-		mTitle = title;
+//		mTitle = title;
 	}
 
 	public ImageThought(UUID id){
@@ -58,6 +58,14 @@ public class ImageThought {
 
 	public void setThoughtComplete(boolean thoughtComplete) {
 		mThoughtComplete = thoughtComplete;
+	}
+
+	public String getTitle() {
+		return mTitle;
+	}
+
+	public void setTitle(String title) {
+		mTitle = title;
 	}
 
 	public String getFormattedDate(){
