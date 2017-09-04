@@ -15,17 +15,20 @@ public class ImageThought {
 	private boolean mThoughtComplete;
 	private int mImage;
 	private UUID mId;
+	private String mTitle;
 
 	public ImageThought(){
 		mDate = new Date();
 		mThought = "Default text";
 		mId = UUID.randomUUID();
+		mTitle = "Title";
 	}
 
-	public ImageThought(String thought){
+	public ImageThought(String thought, String title){
 		mDate = new Date();
 		mThought = thought;
 		mId = UUID.randomUUID();
+		mTitle = title;
 	}
 
 	public ImageThought(UUID id){
