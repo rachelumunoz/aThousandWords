@@ -25,6 +25,7 @@ public class ImageThoughtBaseHelper extends SQLiteOpenHelper {
 			" _id integer primary key autoincrement, " +
 			ImageThoughtTable.Cols.UUID + ", " +
 			ImageThoughtTable.Cols.THOUGHT + ", " +
+			ImageThoughtTable.Cols.TITLE + ", " +
 			ImageThoughtTable.Cols.DATE + ", " +
 			ImageThoughtTable.Cols.COMPLETE +
 			")"

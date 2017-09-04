@@ -55,6 +55,7 @@ public class ImageThoughtsFragment extends Fragment {
 	private File mPhotoFile;
 
 	private EditText mImageThoughtEditText;
+	private EditText mTitleEditText;
 	private TextView mImageThoughtDateTextView;
 	private CheckBox mImageThoughtCompleteCheckBox;
 	private ImageView mImageThoughtImageView;
@@ -137,6 +138,26 @@ public class ImageThoughtsFragment extends Fragment {
 			@Override
 			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 				mImageThought.setThought(charSequence.toString());
+			}
+
+			@Override
+			public void afterTextChanged(Editable editable) {
+
+			}
+		});
+
+		mTitleEditText = (EditText) view.findViewById(R.id.imageThought_title);
+		mTitleEditText.setText(mImageThought.getTitle());
+
+		mTitleEditText.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				mImageThought.setTitle(charSequence.toString());
 			}
 
 			@Override

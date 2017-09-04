@@ -15,17 +15,20 @@ public class ImageThought {
 	private boolean mThoughtComplete;
 	private int mImage;
 	private UUID mId;
+	private String mTitle;
 
 	public ImageThought(){
 		mDate = new Date();
 		mThought = "Default text";
 		mId = UUID.randomUUID();
+		mTitle = "Title";
 	}
 
 	public ImageThought(String thought){
 		mDate = new Date();
 		mThought = thought;
 		mId = UUID.randomUUID();
+//		mTitle = title;
 	}
 
 	public ImageThought(UUID id){
@@ -55,6 +58,14 @@ public class ImageThought {
 
 	public void setThoughtComplete(boolean thoughtComplete) {
 		mThoughtComplete = thoughtComplete;
+	}
+
+	public String getTitle() {
+		return mTitle;
+	}
+
+	public void setTitle(String title) {
+		mTitle = title;
 	}
 
 	public String getFormattedDate(){

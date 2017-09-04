@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="activity_masterdetail" type="layout">@layout/activity_image_thoughts</item>
+    <item name="detail_list_item" type="layout">@layout/list_item_image_thought</item>
 </resources>
