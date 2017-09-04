@@ -2,9 +2,11 @@ package io.rachelmunoz.imagethoughts;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,13 +29,19 @@ import java.util.List;
  * Created by rachelmunoz on 7/21/17.
  */
 
-public class ImageThoughtsListFragment extends Fragment {
+public class ImageThoughtsListFragment extends Fragment implements DynamicRecyclerView {
 	private RecyclerView mRecyclerView;
 	private ImageThoughtAdapter mAdapter;
 	private Callbacks mCallbacks;
 
 	public interface Callbacks {
 		void onImageThoughtSelected(ImageThought imageThought);
+	}
+
+
+	@Override
+	public int getViewHolderResId() {
+		return R.layout.detail_list_item;
 	}
 
 	@Override
@@ -81,7 +89,13 @@ public class ImageThoughtsListFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_image_thoughts_list, container, false);
 
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler_view);
-		mRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 3));
+
+		Configuration config = getResources().getConfiguration();
+		if (config.smallestScreenWidthDp < 600){
+			mRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 3)); // set different RecylerView for phone vs tablet
+		} else {
+			mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		}
 
 		updateUI();
 
@@ -97,15 +111,17 @@ public class ImageThoughtsListFragment extends Fragment {
 	private class ImageThoughtHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 		private ImageView mImageThoughtImageView;
 		private ImageThought mImageThought;
-		private TextView mImageThoughtDate;
+		private TextView mImageThoughtTitle;
 
 		private File mPhotoFile;
 
 		public ImageThoughtHolder(LayoutInflater inflater, ViewGroup parent){
-			super(inflater.inflate(R.layout.list_item_image_thought, parent, false));
+			super(inflater.inflate(getViewHolderResId(), parent, false));
 			itemView.setOnClickListener(this);
 
 			mImageThoughtImageView = (ImageView) itemView.findViewById(R.id.image_recycler);
+
+			mImageThoughtTitle = (TextView) itemView.findViewById(R.id.imageThought_title);
 		}
 
 		@Override
@@ -126,6 +142,10 @@ public class ImageThoughtsListFragment extends Fragment {
 				mImageThoughtImageView.setImageBitmap(bitmap);
 			}
 
+
+			if (mImageThoughtTitle != null){
+				mImageThoughtTitle.setText(mImageThought.getTitle());
+			}
 
 		}
 	}

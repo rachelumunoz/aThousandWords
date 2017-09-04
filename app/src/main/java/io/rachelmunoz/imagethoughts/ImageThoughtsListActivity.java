@@ -2,6 +2,7 @@ package io.rachelmunoz.imagethoughts;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
@@ -20,6 +21,8 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 	protected int getLayoutResId() {
 		return R.layout.activity_masterdetail;
 	}
+
+
 
 	@Override
 	public void onImageThoughtSelected(ImageThought imageThought) {
