@@ -65,6 +65,7 @@ public class ImageThoughtsFragment extends Fragment {
 
 	public interface Callbacks {
 		void onImageThoughtUpdated(ImageThought imageThought);
+		void onImageThoughtDeleted();
 	}
 
 	public static ImageThoughtsFragment newInstance(UUID id){
@@ -116,7 +117,8 @@ public class ImageThoughtsFragment extends Fragment {
 			case R.id.delete_entry:
 				ImageThoughtLab.get(getActivity()).deleteImageThought(mImageThought);
 
-				getActivity().finish();
+//				getActivity().finish(); // chnages depending on layout
+				mCallbacks.onImageThoughtDeleted();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

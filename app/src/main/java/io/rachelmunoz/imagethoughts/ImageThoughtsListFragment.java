@@ -40,7 +40,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 
 	@Override
-	public int getViewHolderResId() {
+	public int getViewHolderResId() { // alias resource for smallestWidth
 		return R.layout.detail_list_item;
 	}
 
@@ -90,9 +90,9 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler_view);
 
-		Configuration config = getResources().getConfiguration();
+		Configuration config = getResources().getConfiguration(); // set different RecylerView LayoutManager for phone vs tablet
 		if (config.smallestScreenWidthDp < 600){
-			mRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 3)); // set different RecylerView for phone vs tablet
+			mRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 3));
 		} else {
 			mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		}

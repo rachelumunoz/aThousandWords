@@ -27,6 +27,11 @@ public class ImageThoughtsActivity extends SingleFragmentActivity implements Ima
 	public void onImageThoughtUpdated(ImageThought imageThought) {
 
 	}
+
+	@Override
+	public void onImageThoughtDeleted() {
+		finish();
+	}
 }
 
 
