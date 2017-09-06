@@ -44,4 +44,17 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 				.findFragmentById(R.id.image_thoughts_fragment_container);
 		listFragment.updateUI();
 	}
+
+	@Override
+	public void onImageThoughtDeleted() {
+		Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.detail_fragment_container);
+		ImageThoughtsListFragment listFragment = (ImageThoughtsListFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.image_thoughts_fragment_container);
+
+		if (fragment != null){
+			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+			listFragment.updateUI();
+		}
+	}
 }
+
