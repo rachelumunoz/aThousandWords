@@ -8,4 +8,9 @@
         android:title="@string/new_image_thought"
         app:showAsAction="ifRoom|withText"/>
 
+    <item
+        android:id="@+id/completed"
+        android:title="@string/completed"
+        app:showAsAction="ifRoom|withText"/>
+
 </menu>

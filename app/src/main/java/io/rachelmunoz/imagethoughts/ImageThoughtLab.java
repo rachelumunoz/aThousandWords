@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import io.rachelmunoz.imagethoughts.database.ImageThoughtBaseHelper;
 import io.rachelmunoz.imagethoughts.database.ImageThoughtCursorWrapper;
 import io.rachelmunoz.imagethoughts.database.ImageThoughtDbSchema;
 import io.rachelmunoz.imagethoughts.database.ImageThoughtDbSchema.ImageThoughtTable;
+
+import static android.net.wifi.SupplicantState.COMPLETED;
 
 /**
  * Created by rachelmunoz on 7/21/17.
@@ -45,6 +48,44 @@ public class ImageThoughtLab {
 		mDatabase.insert(ImageThoughtTable.NAME, null, values);
 	}
 
+
+	// pass in, what want, add case statement
+	public List<ImageThought> getImageThoughts(String filterType){
+		List<ImageThought> imageThoughts = new ArrayList<>();
+		String whereClause = null;
+		String whereArgs[] = null;
+
+		switch(filterType){
+			case "DEFAULT":
+//				queryImageThoughts(whereClause , whereArgs);
+				break;
+			case "COMPLETED":
+//				// queryImageThoughts() where completed = true
+				whereClause = ImageThoughtTable.Cols.COMPLETE + " = ?";
+				whereArgs = new String[] {"1"};
+//
+//				queryImageThoughts(whereClause, whereArgs);
+//				Toast.makeText(mContext, "completed imageThoughts", Toast.LENGTH_SHORT).show();
+				break;
+			default:
+				queryImageThoughts(null, null);
+		}
+
+		ImageThoughtCursorWrapper cursor = queryImageThoughts(whereClause, whereArgs);
+
+		try {
+			cursor.moveToFirst();
+			while(!cursor.isAfterLast()){
+				imageThoughts.add(cursor.getImageThought());
+				cursor.moveToNext();
+			}
+
+		} finally {
+			cursor.close();
+		}
+
+		return imageThoughts;
+	}
 
 
 	public List<ImageThought> getImageThoughts(){

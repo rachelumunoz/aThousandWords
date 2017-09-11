@@ -33,6 +33,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 	private RecyclerView mRecyclerView;
 	private ImageThoughtAdapter mAdapter;
 	private Callbacks mCallbacks;
+	private String mCurrentFilter = "DEFAULT";
 
 	public interface Callbacks {
 		void onImageThoughtSelected(ImageThought imageThought);
@@ -59,7 +60,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 	@Override
 	public void onResume() {
 		super.onResume();
-		updateUI();
+		updateUI(mCurrentFilter);
 	}
 
 	@Override
@@ -75,8 +76,15 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 				ImageThought imageThought = new ImageThought();
 				ImageThoughtLab.get(getActivity()).addImageThought(imageThought);
 
-				updateUI();
+				updateUI(mCurrentFilter);
 				mCallbacks.onImageThoughtSelected(imageThought);
+				return true;
+
+			case R.id.completed:
+				// update the UI (this list) with only ImageThoughts that are completed
+				setFilter("COMPLETED");
+				updateUI(mCurrentFilter);
+
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -97,7 +105,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 			mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		}
 
-		updateUI();
+		updateUI(mCurrentFilter);
 
 		return view;
 	}
@@ -180,9 +188,9 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		}
 	}
 
-	public void updateUI(){
+	public void updateUI(String currentFilter){  // string filterType
 		ImageThoughtLab imageThoughtLab = ImageThoughtLab.get(getActivity());
-		List<ImageThought> imageThoughts = imageThoughtLab.getImageThoughts();
+		List<ImageThought> imageThoughts = imageThoughtLab.getImageThoughts(mCurrentFilter);
 
 		if (mAdapter == null){ //on Activity recreate?
 			mAdapter = new ImageThoughtAdapter(imageThoughts);
@@ -193,5 +201,26 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		}
 	}
 
+	private void setFilter(String filter){
+		mCurrentFilter = filter;
+	}
 
 }
+
+
+// in updateUI -- get imageThoughts will require a filter type
+
+// this filter type will be set to default of default
+// will change on click of menu item
+	// which will trigger an updateUI with new filter type
+
+
+// listFragment will have a field called mCurrentFiltering initialized to ALL_IMAGE_THOUGHTS
+// setFiltering in case statement of menu
+
+// add completed option in menu
+// when this is clicked, will invoke updateUI that will get the filtered imageTHoughts
+
+// activity might be recreated with a selected filter
+// want to start a fragment with looking for a filter -- add in the static factory method
+	// in the activity, add a private static final string of EXTRA_FILTER = "list_filter";
