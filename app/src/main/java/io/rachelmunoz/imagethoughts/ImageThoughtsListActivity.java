@@ -42,7 +42,7 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 	public void onImageThoughtUpdated(ImageThought imageThought) {
 		ImageThoughtsListFragment listFragment = (ImageThoughtsListFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.image_thoughts_fragment_container);
-		listFragment.updateUI("DEFAULT");
+		listFragment.updateUI("COMPLETED");
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 
 		if (fragment != null){
 			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-			listFragment.updateUI("DEFAULT");
+			listFragment.updateUI("COMPLETED");
 		}
 	}
 }

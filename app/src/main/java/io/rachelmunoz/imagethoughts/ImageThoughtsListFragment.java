@@ -1,15 +1,11 @@
 package io.rachelmunoz.imagethoughts;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,16 +27,17 @@ import java.util.List;
  */
 
 public class ImageThoughtsListFragment extends Fragment implements DynamicRecyclerView {
+	// completed or all
 	private static final String SAVED_COMPLETED_VISIBLE = "completed";
 
-//	public static final String DEFAULT_FILTER = "default";
+//	public static final String DEFAULT_FILTER = "all";
 //	public static final String COMPLETE_FILTER = "complete";
 
 	private RecyclerView mRecyclerView;
 	private ImageThoughtAdapter mAdapter;
 	private Callbacks mCallbacks;
 
-	private String mCurrentFilter; // set to DEFAULT_FILTER
+	private String mCurrentFilter = "ALL"; // set to DEFAULT_FILTER
 
 	private boolean mSubtitleVisible;
 
@@ -97,7 +94,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 			case R.id.completed:
 				// update the UI (this list) with only ImageThoughts that are completed
-//				setFilter("COMPLETED");
+				setCurrentFilter("COMPLETED");
 				mSubtitleVisible = !mSubtitleVisible;
 				getActivity().invalidateOptionsMenu(); // recreates menu
 
@@ -218,7 +215,9 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 	public void updateUI(String currentFilter){  // string filterType
 		ImageThoughtLab imageThoughtLab = ImageThoughtLab.get(getActivity());
-		List<ImageThought> imageThoughts = imageThoughtLab.getImageThoughts(mCurrentFilter);
+		List<ImageThought> imageThoughts = imageThoughtLab.getImageThoughts(currentFilter);
+
+		Toast.makeText(getActivity(), "count is "+ imageThoughts.size(), Toast.LENGTH_SHORT).show();
 
 		if (mAdapter == null){ //on Activity recreate?
 			mAdapter = new ImageThoughtAdapter(imageThoughts);
@@ -229,7 +228,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		}
 	}
 
-	private void setFilter(String filter){
+	private void setCurrentFilter(String filter){
 		mCurrentFilter = filter;
 	}
 
