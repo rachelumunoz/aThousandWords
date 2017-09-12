@@ -55,21 +55,21 @@ public class ImageThoughtLab {
 		String whereClause = null;
 		String whereArgs[] = null;
 
-		switch(filterType){
-			case "DEFAULT":
-//				queryImageThoughts(whereClause , whereArgs);
-				break;
-			case "COMPLETED":
-//				// queryImageThoughts() where completed = true
-				whereClause = ImageThoughtTable.Cols.COMPLETE + " = ?";
-				whereArgs = new String[] {"1"};
-//
-//				queryImageThoughts(whereClause, whereArgs);
-//				Toast.makeText(mContext, "completed imageThoughts", Toast.LENGTH_SHORT).show();
-				break;
-			default:
-				queryImageThoughts(null, null);
-		}
+//		switch(filterType){
+//			case "DEFAULT":
+////				queryImageThoughts(whereClause , whereArgs);
+//				break;
+//			case "COMPLETED":
+////				// queryImageThoughts() where completed = true
+//				whereClause = ImageThoughtTable.Cols.COMPLETE + " = ?";
+//				whereArgs = new String[] {"1"};
+////
+////				queryImageThoughts(whereClause, whereArgs);
+////				Toast.makeText(mContext, "completed imageThoughts", Toast.LENGTH_SHORT).show();
+//				break;
+//			default:
+//				queryImageThoughts(null, null);
+//		}
 
 		ImageThoughtCursorWrapper cursor = queryImageThoughts(whereClause, whereArgs);
 

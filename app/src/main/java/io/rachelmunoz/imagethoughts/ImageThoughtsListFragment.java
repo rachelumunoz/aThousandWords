@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,10 +31,18 @@ import java.util.List;
  */
 
 public class ImageThoughtsListFragment extends Fragment implements DynamicRecyclerView {
+	private static final String SAVED_COMPLETED_VISIBLE = "completed";
+
+//	public static final String DEFAULT_FILTER = "default";
+//	public static final String COMPLETE_FILTER = "complete";
+
 	private RecyclerView mRecyclerView;
 	private ImageThoughtAdapter mAdapter;
 	private Callbacks mCallbacks;
-	private String mCurrentFilter = "DEFAULT";
+
+	private String mCurrentFilter; // set to DEFAULT_FILTER
+
+	private boolean mSubtitleVisible;
 
 	public interface Callbacks {
 		void onImageThoughtSelected(ImageThought imageThought);
@@ -64,6 +73,12 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 	}
 
 	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable(SAVED_COMPLETED_VISIBLE, mSubtitleVisible);
+	}
+
+	@Override
 	public void onDetach() {
 		super.onDetach();
 		mCallbacks = null;
@@ -82,7 +97,10 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 			case R.id.completed:
 				// update the UI (this list) with only ImageThoughts that are completed
-				setFilter("COMPLETED");
+//				setFilter("COMPLETED");
+				mSubtitleVisible = !mSubtitleVisible;
+				getActivity().invalidateOptionsMenu(); // recreates menu
+
 				updateUI(mCurrentFilter);
 
 				return true;
@@ -105,8 +123,11 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 			mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		}
 
-		updateUI(mCurrentFilter);
+		if(savedInstanceState != null){
+			mSubtitleVisible = savedInstanceState.getBoolean(SAVED_COMPLETED_VISIBLE);
+		}
 
+		updateUI(mCurrentFilter);
 		return view;
 	}
 
@@ -114,6 +135,13 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.fragment_image_thoughts_list, menu);
+
+		MenuItem subtitleItem = menu.findItem(R.id.completed);
+		if (mSubtitleVisible){
+			subtitleItem.setTitle(R.string.not_completed);
+		} else {
+			subtitleItem.setTitle(R.string.completed);
+		}
 	}
 
 	private class ImageThoughtHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -204,6 +232,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 	private void setFilter(String filter){
 		mCurrentFilter = filter;
 	}
+
 
 }
 
