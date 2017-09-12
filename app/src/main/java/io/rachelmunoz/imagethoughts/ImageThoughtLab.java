@@ -59,7 +59,7 @@ public class ImageThoughtLab {
 
 		switch (filterType){
 			case "ALL":
-				Toast.makeText(mContext, "hello all", Toast.LENGTH_SHORT).show();
+				queryImageThoughts(null, null);
 				break;
 			case "COMPLETED":
 				whereClause = ImageThoughtTable.Cols.COMPLETE + " = ?";
