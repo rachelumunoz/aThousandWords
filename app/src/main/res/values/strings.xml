@@ -10,4 +10,7 @@
     <string name="count_format">%1$d entries</string>
 
     <string name="delete_image_thought">Delete</string>
+    <string name="completed">See Completed</string>
+    <string name="not_completed">See All</string>
+
 </resources>

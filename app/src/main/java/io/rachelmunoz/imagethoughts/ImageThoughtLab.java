@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +15,10 @@ import io.rachelmunoz.imagethoughts.database.ImageThoughtBaseHelper;
 import io.rachelmunoz.imagethoughts.database.ImageThoughtCursorWrapper;
 import io.rachelmunoz.imagethoughts.database.ImageThoughtDbSchema;
 import io.rachelmunoz.imagethoughts.database.ImageThoughtDbSchema.ImageThoughtTable;
+
+import static android.R.attr.id;
+import static android.R.attr.value;
+import static android.net.wifi.SupplicantState.COMPLETED;
 
 /**
  * Created by rachelmunoz on 7/21/17.
@@ -46,11 +51,26 @@ public class ImageThoughtLab {
 	}
 
 
-
-	public List<ImageThought> getImageThoughts(){
+	// pass in, what want, add case statement
+	public List<ImageThought> getImageThoughts(String filterType){
 		List<ImageThought> imageThoughts = new ArrayList<>();
+		String whereClause = null;
+		String whereArgs[] = null;
 
-		ImageThoughtCursorWrapper cursor = queryImageThoughts(null, null);
+		switch (filterType){
+			case "ALL":
+				queryImageThoughts(null, null);
+				break;
+			case "COMPLETED":
+				whereClause = ImageThoughtTable.Cols.COMPLETE + " = ?";
+				whereArgs =  new String[]{String.valueOf(1)};
+				break;
+			default:
+				queryImageThoughts(null, null);
+		}
+
+
+		ImageThoughtCursorWrapper cursor = queryImageThoughts(whereClause, whereArgs);
 
 		try {
 			cursor.moveToFirst();
@@ -65,6 +85,26 @@ public class ImageThoughtLab {
 
 		return imageThoughts;
 	}
+
+
+//	public List<ImageThought> getImageThoughts(){
+//		List<ImageThought> imageThoughts = new ArrayList<>();
+//
+//		ImageThoughtCursorWrapper cursor = queryImageThoughts(null, null);
+//
+//		try {
+//			cursor.moveToFirst();
+//			while(!cursor.isAfterLast()){
+//				imageThoughts.add(cursor.getImageThought());
+//				cursor.moveToNext();
+//			}
+//
+//		} finally {
+//			cursor.close();
+//		}
+//
+//		return imageThoughts;
+//	}
 
 	public ImageThought getImageThought(UUID id){
 		ImageThoughtCursorWrapper cursor = queryImageThoughts(
@@ -106,6 +146,7 @@ public class ImageThoughtLab {
 		mDatabase.delete(ImageThoughtTable.NAME, ImageThoughtTable.Cols.UUID  + " = ?", new String[] {uuidString});
 	}
 
+
 	private ImageThoughtCursorWrapper queryImageThoughts(String whereClause, String[] whereArgs){
 		Cursor cursor = mDatabase.query(
 				ImageThoughtTable.NAME,
@@ -120,13 +161,14 @@ public class ImageThoughtLab {
 		return new ImageThoughtCursorWrapper(cursor);
 	}
 
+
 	private static ContentValues getContentValues(ImageThought imageThought){
 		ContentValues values = new ContentValues();
 		values.put(ImageThoughtTable.Cols.UUID, imageThought.getId().toString());
 		values.put(ImageThoughtTable.Cols.THOUGHT, imageThought.getThought());
 		values.put(ImageThoughtTable.Cols.TITLE, imageThought.getTitle());
 		values.put(ImageThoughtTable.Cols.DATE, imageThought.getDate().getTime());
-		values.put(ImageThoughtTable.Cols.COMPLETE, imageThought.isThoughtComplete() ? 1 : 0);
+		values.put(ImageThoughtTable.Cols.COMPLETE, imageThought.isThoughtComplete() ? Integer.toString(1) : Integer.toString(0));
 
 		return values;
 	}
