@@ -57,10 +57,10 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 
 			// need to know current filter
 			String currentFilter = listFragment.getCurrentFilter();
-			if (currentFilter == "ALL"){
-				listFragment.updateUI("ALL");
+			if (currentFilter == listFragment.ALL_FILTER){
+				listFragment.updateUI(listFragment.ALL_FILTER);
 			}else {
-				listFragment.updateUI("COMPLETED");
+				listFragment.updateUI(listFragment.COMPLETE_FILTER);
 			}
 
 		}
