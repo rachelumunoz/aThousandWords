@@ -53,7 +53,16 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 
 		if (fragment != null){
 			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-			listFragment.updateUI("ALL");
+
+
+			// need to know current filter
+			String currentFilter = listFragment.getCurrentFilter();
+			if (currentFilter == "ALL"){
+				listFragment.updateUI("ALL");
+			}else {
+				listFragment.updateUI("COMPLETED");
+			}
+
 		}
 	}
 }

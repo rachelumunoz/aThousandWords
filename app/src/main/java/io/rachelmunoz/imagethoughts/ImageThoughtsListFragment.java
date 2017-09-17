@@ -138,7 +138,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		inflater.inflate(R.menu.fragment_image_thoughts_list, menu);
 
 		MenuItem subtitleItem = menu.findItem(R.id.completed);
-		if (mSubtitleVisible){
+		if (mCurrentFilter == "COMPLETED"){
 			subtitleItem.setTitle(R.string.not_completed);
 		} else {
 			subtitleItem.setTitle(R.string.completed);
@@ -230,9 +230,11 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		}
 	}
 
-	private void setCurrentFilter(String filter){
+	public void setCurrentFilter(String filter){
 		mCurrentFilter = filter;
 	}
 
-
+	public String getCurrentFilter(){
+		return mCurrentFilter;
+	}
 }
