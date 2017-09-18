@@ -1,9 +1,12 @@
 package io.rachelmunoz.imagethoughts;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 /**
  * Created by rachelmunoz on 7/24/17.
