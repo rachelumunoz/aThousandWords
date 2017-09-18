@@ -30,6 +30,8 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 		Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.detail_fragment_container);
 
 		if (fragment != null){
+
+			// check if current detail frag is of the filtered type and remove if not
 			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 		}
 
