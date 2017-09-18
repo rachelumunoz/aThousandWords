@@ -30,19 +30,20 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 	// completed or all
 	private static final String SAVED_COMPLETED_VISIBLE = "completed";
 
-//	public static final String DEFAULT_FILTER = "all";
-//	public static final String COMPLETE_FILTER = "complete";
+	public static final String ALL_FILTER = "all";
+	public static final String COMPLETE_FILTER = "completed";
 
 	private RecyclerView mRecyclerView;
 	private ImageThoughtAdapter mAdapter;
 	private Callbacks mCallbacks;
 
-	private String mCurrentFilter = "ALL"; // set to DEFAULT_FILTER
+	private String mCurrentFilter = ALL_FILTER;
 
 	private boolean mSubtitleVisible;
 
 	public interface Callbacks {
 		void onImageThoughtSelected(ImageThought imageThought);
+		void updateList(String currentFilter);
 	}
 
 
@@ -93,17 +94,21 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 				return true;
 
 			case R.id.completed:
-				if (mCurrentFilter == "COMPLETED"){
-					setCurrentFilter("ALL");
+				if (mCurrentFilter == COMPLETE_FILTER){
+					setCurrentFilter(ALL_FILTER);
 				} else {
-					setCurrentFilter("COMPLETED");
+					setCurrentFilter(COMPLETE_FILTER);
 				}
 
 				mSubtitleVisible = !mSubtitleVisible;
 				// update the filter on each click, so filter type will be sent
 
 				getActivity().invalidateOptionsMenu(); // recreates menu
-				updateUI(mCurrentFilter);
+//				updateUI(mCurrentFilter); // gets filtered ImageThoughts
+											// need to remove fragment if in tablet view-- callbacks?
+				mCallbacks.updateList(mCurrentFilter);
+				//
+
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -117,7 +122,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler_view);
 
-		Configuration config = getResources().getConfiguration(); // set different RecylerView LayoutManager for phone vs tablet
+		Configuration config = getResources().getConfiguration(); // set different RecyclerView LayoutManager for phone vs tablet
 		if (config.smallestScreenWidthDp < 600){
 			mRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 3));
 		} else {
@@ -138,7 +143,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		inflater.inflate(R.menu.fragment_image_thoughts_list, menu);
 
 		MenuItem subtitleItem = menu.findItem(R.id.completed);
-		if (mSubtitleVisible){
+		if (mCurrentFilter == COMPLETE_FILTER){
 			subtitleItem.setTitle(R.string.not_completed);
 		} else {
 			subtitleItem.setTitle(R.string.completed);
@@ -230,9 +235,11 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		}
 	}
 
-	private void setCurrentFilter(String filter){
+	public void setCurrentFilter(String filter){
 		mCurrentFilter = filter;
 	}
 
-
+	public String getCurrentFilter(){
+		return mCurrentFilter;
+	}
 }

@@ -58,10 +58,10 @@ public class ImageThoughtLab {
 		String whereArgs[] = null;
 
 		switch (filterType){
-			case "ALL":
+			case "all":
 				queryImageThoughts(null, null);
 				break;
-			case "COMPLETED":
+			case "completed":
 				whereClause = ImageThoughtTable.Cols.COMPLETE + " = ?";
 				whereArgs =  new String[]{String.valueOf(1)};
 				break;

@@ -116,9 +116,8 @@ public class ImageThoughtsFragment extends Fragment {
 		switch(item.getItemId()){
 			case R.id.delete_entry:
 				ImageThoughtLab.get(getActivity()).deleteImageThought(mImageThought);
+				mCallbacks.onImageThoughtDeleted(); // different actions needed depending on device type
 
-//				getActivity().finish(); // chnages depending on layout
-				mCallbacks.onImageThoughtDeleted();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
