@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 /**
  * Created by rachelmunoz on 7/21/17.
@@ -22,7 +23,20 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 		return R.layout.activity_masterdetail;
 	}
 
+	@Override
+	public void updateList(String currentFilter) {
+		ImageThoughtsListFragment listFragment = (ImageThoughtsListFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.image_thoughts_fragment_container);
+		Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.detail_fragment_container);
 
+		if (fragment != null){
+			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+		}
+
+		listFragment.updateUI(currentFilter);
+
+
+	}
 
 	@Override
 	public void onImageThoughtSelected(ImageThought imageThought) {
@@ -42,7 +56,8 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 	public void onImageThoughtUpdated(ImageThought imageThought) {
 		ImageThoughtsListFragment listFragment = (ImageThoughtsListFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.image_thoughts_fragment_container);
-		listFragment.updateUI("ALL");
+
+		listFragment.updateUI(listFragment.getCurrentFilter()); //updates list to current Filter
 	}
 
 	@Override
@@ -54,15 +69,7 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 		if (fragment != null){
 			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 
-
-			// need to know current filter
-			String currentFilter = listFragment.getCurrentFilter();
-			if (currentFilter == listFragment.ALL_FILTER){
-				listFragment.updateUI(listFragment.ALL_FILTER);
-			}else {
-				listFragment.updateUI(listFragment.COMPLETE_FILTER);
-			}
-
+			listFragment.updateUI(listFragment.getCurrentFilter());
 		}
 	}
 }

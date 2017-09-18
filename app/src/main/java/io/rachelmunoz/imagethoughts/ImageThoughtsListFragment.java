@@ -43,6 +43,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 	public interface Callbacks {
 		void onImageThoughtSelected(ImageThought imageThought);
+		void updateList(String currentFilter);
 	}
 
 
@@ -103,7 +104,11 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 				// update the filter on each click, so filter type will be sent
 
 				getActivity().invalidateOptionsMenu(); // recreates menu
-				updateUI(mCurrentFilter);
+//				updateUI(mCurrentFilter); // gets filtered ImageThoughts
+											// need to remove fragment if in tablet view-- callbacks?
+				mCallbacks.updateList(mCurrentFilter);
+				//
+
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -117,7 +122,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler_view);
 
-		Configuration config = getResources().getConfiguration(); // set different RecylerView LayoutManager for phone vs tablet
+		Configuration config = getResources().getConfiguration(); // set different RecyclerView LayoutManager for phone vs tablet
 		if (config.smallestScreenWidthDp < 600){
 			mRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 3));
 		} else {
