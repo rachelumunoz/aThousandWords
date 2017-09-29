@@ -1,11 +1,8 @@
 package io.rachelmunoz.imagethoughts;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.util.Log;
 
 /**
  * Created by rachelmunoz on 7/21/17.
@@ -13,9 +10,11 @@ import android.widget.Toast;
 
 public class ImageThoughtsListActivity extends SingleFragmentActivity implements ImageThoughtsListFragment.Callbacks, ImageThoughtsFragment.Callbacks {
 
+	private static final String TAG = "ImageThoughtsListAct";
+
 	@Override
 	public Fragment createFragment() {
-		return new ImageThoughtsListFragment();
+		return ImageThoughtsListFragment.newInstance();
 	}
 
 	@Override
@@ -30,8 +29,26 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 		Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.detail_fragment_container);
 
 		if (fragment != null){
-			// need to do this -- check if current detail frag is of the filtered type and remove if not
-			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+			String filter = listFragment.getArguments().getString(ImageThoughtsListFragment.ARGS_LIST_FILTER_TYPE);
+
+			boolean complete = listFragment.getArguments().getBoolean(ImageThoughtsListFragment.ARGS_IT_COMPLETE);
+//			Log.d(TAG, "the current filter selected is " + filter);
+//			Log.d(TAG, "current imageThought is complete: " + complete);
+
+			switch(filter){
+				case ImageThoughtsListFragment.ALL_FILTER:
+					if (complete == true){
+						getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+					}
+					break;
+				case ImageThoughtsListFragment.COMPLETE_FILTER:
+					if(complete == false){
+						getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+					}
+					break;
+				default:
+					getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+			}
 		}
 
 		listFragment.updateUI(currentFilter);
