@@ -30,14 +30,11 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 		Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.detail_fragment_container);
 
 		if (fragment != null){
-
-			// check if current detail frag is of the filtered type and remove if not
+			// need to do this -- check if current detail frag is of the filtered type and remove if not
 			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 		}
 
 		listFragment.updateUI(currentFilter);
-
-
 	}
 
 	@Override
@@ -59,7 +56,7 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 		ImageThoughtsListFragment listFragment = (ImageThoughtsListFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.image_thoughts_fragment_container);
 
-		listFragment.updateUI(listFragment.getCurrentFilter()); //updates list to current Filter
+		listFragment.updateUI(listFragment.getCurrentFilter()); //updates list to current Filter, but the newly updated ImageThought not reflected
 	}
 
 	@Override

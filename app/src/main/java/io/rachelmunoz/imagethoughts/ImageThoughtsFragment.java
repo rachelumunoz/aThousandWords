@@ -51,6 +51,7 @@ public class ImageThoughtsFragment extends Fragment {
 
 	static final String ARG_IMAGE_THOUGHT_ID = "imageThought_id";
 	private static final int REQUEST_PHOTO = 0;
+	private static final String TAG = "ImageThoughtsFragment";
 	private ImageThought mImageThought;
 	private File mPhotoFile;
 
@@ -176,8 +177,11 @@ public class ImageThoughtsFragment extends Fragment {
 			@Override
 			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 				mImageThought.setThoughtComplete(b);
+				updateImageThought();
 			}
 		});
+
+
 
 		PackageManager packageManager = getActivity().getPackageManager();
 		mCameraButton = (Button) view.findViewById(R.id.camera_button);
