@@ -108,7 +108,6 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 //				updateUI(mCurrentFilter); // gets filtered ImageThoughts
 											// need to remove fragment if in tablet view-- callbacks?
 				mCallbacks.updateList(mCurrentFilter);
-				//
 
 				return true;
 			default:
