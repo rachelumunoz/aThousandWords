@@ -19,9 +19,9 @@ public class ImageThought {
 
 	public ImageThought(){
 		mDate = new Date();
-		mThought = "Default text";
+		mThought = "";
 		mId = UUID.randomUUID();
-		mTitle = "Title";
+		mTitle = "";
 	}
 
 	public ImageThought(String thought){

@@ -130,6 +130,10 @@ public class ImageThoughtsFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_image_thoughts, container, false);
 
 		mImageThoughtEditText = (EditText) view.findViewById(R.id.imageThought_text);
+
+		String imageThoughText= mImageThought.getThought();
+
+		// if imageThoughtText is empty, put descirption, else use thought
 		mImageThoughtEditText.setText(mImageThought.getThought());
 		mImageThoughtEditText.addTextChangedListener(new TextWatcher() {
 			@Override

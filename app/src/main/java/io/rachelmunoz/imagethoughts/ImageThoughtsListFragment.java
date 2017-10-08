@@ -192,7 +192,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 			mImageThought = imageThought;
 			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(mImageThought);
 
-			// repeats from ImageThoughtsFragment
+			// repeats from ImageThoughtsFragment -- logic from updatePhotoView()
 			if (mPhotoFile == null || !mPhotoFile.exists()){
 				mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
 			} else {
