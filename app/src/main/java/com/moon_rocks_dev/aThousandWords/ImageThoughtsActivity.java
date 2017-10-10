@@ -1,4 +1,4 @@
-package io.rachelmunoz.aThousandWords;
+package com.moon_rocks_dev.aThousandWords;
 
 import android.content.Context;
 import android.content.Intent;
