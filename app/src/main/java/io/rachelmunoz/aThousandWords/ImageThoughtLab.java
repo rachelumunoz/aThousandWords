@@ -1,24 +1,18 @@
-package io.rachelmunoz.imagethoughts;
+package io.rachelmunoz.aThousandWords;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import io.rachelmunoz.imagethoughts.database.ImageThoughtBaseHelper;
-import io.rachelmunoz.imagethoughts.database.ImageThoughtCursorWrapper;
-import io.rachelmunoz.imagethoughts.database.ImageThoughtDbSchema;
-import io.rachelmunoz.imagethoughts.database.ImageThoughtDbSchema.ImageThoughtTable;
-
-import static android.R.attr.id;
-import static android.R.attr.value;
-import static android.net.wifi.SupplicantState.COMPLETED;
+import io.rachelmunoz.aThousandWords.database.ImageThoughtBaseHelper;
+import io.rachelmunoz.aThousandWords.database.ImageThoughtCursorWrapper;
+import io.rachelmunoz.aThousandWords.database.ImageThoughtDbSchema.ImageThoughtTable;
 
 /**
  * Created by rachelmunoz on 7/21/17.

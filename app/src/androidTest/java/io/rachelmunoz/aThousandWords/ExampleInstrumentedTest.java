@@ -1,4 +1,4 @@
-package io.rachelmunoz.imagethoughts;
+package io.rachelmunoz.aThousandWords;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

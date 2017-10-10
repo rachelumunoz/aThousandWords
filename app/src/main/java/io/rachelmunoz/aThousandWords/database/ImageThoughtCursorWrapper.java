@@ -1,15 +1,14 @@
-package io.rachelmunoz.imagethoughts.database;
+package io.rachelmunoz.aThousandWords.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
-import android.media.Image;
 
 import java.util.Date;
 import java.util.UUID;
 
-import io.rachelmunoz.imagethoughts.ImageThought;
+import io.rachelmunoz.aThousandWords.ImageThought;
 
-import static io.rachelmunoz.imagethoughts.database.ImageThoughtDbSchema.*;
+import static io.rachelmunoz.aThousandWords.database.ImageThoughtDbSchema.*;
 
 /**
  * Created by rachelmunoz on 7/23/17.

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
     defaultConfig {
-        applicationId "io.rachelmunoz.imagethoughts"
+        applicationId 'io.rachelmunoz.imagethoughts'
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
@@ -17,6 +17,8 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    productFlavors {
     }
 }
 
@@ -31,7 +33,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
     compile 'com.github.bumptech.glide:glide:4.2.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
-    compile ("com.github.bumptech.glide:recyclerview-integration:4.2.0") {
+    compile('com.github.bumptech.glide:recyclerview-integration:4.2.0') {
         // Excludes the support library because it's already included by Glide.
         transitive = false
     }

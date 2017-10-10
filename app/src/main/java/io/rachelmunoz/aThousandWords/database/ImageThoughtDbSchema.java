@@ -1,4 +1,4 @@
-package io.rachelmunoz.imagethoughts.database;
+package io.rachelmunoz.aThousandWords.database;
 
 /**
  * Created by rachelmunoz on 7/23/17.
