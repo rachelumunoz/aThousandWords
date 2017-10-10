@@ -1,4 +1,4 @@
-package io.rachelmunoz.imagethoughts;
+package io.rachelmunoz.aThousandWords;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -23,9 +23,6 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 import java.util.List;
-
-import static android.R.attr.filter;
-import static android.R.attr.fragment;
 
 /**
  * Created by rachelmunoz on 7/21/17.

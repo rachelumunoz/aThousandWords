@@ -1,11 +1,10 @@
-package io.rachelmunoz.imagethoughts.database;
+package io.rachelmunoz.aThousandWords.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import io.rachelmunoz.imagethoughts.ImageThought;
-import io.rachelmunoz.imagethoughts.database.ImageThoughtDbSchema.ImageThoughtTable;
+import io.rachelmunoz.aThousandWords.database.ImageThoughtDbSchema.ImageThoughtTable;
 
 /**
  * Created by rachelmunoz on 7/23/17.

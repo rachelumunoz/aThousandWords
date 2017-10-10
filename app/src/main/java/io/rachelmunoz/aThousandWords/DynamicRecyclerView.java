@@ -1,4 +1,4 @@
-package io.rachelmunoz.imagethoughts;
+package io.rachelmunoz.aThousandWords;
 
 import android.support.annotation.LayoutRes;
 

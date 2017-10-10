@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ImageThoughts</string>
+    <string name="app_name">aThousandWords</string>
     <string name="thought_complete">Completed</string>
     <string name="thought_date">July 14, 2017</string>
     <string name="thought_title">Title</string>
