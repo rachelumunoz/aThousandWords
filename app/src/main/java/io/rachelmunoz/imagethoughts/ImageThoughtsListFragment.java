@@ -18,10 +18,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.io.File;
 import java.util.List;
 
 import static android.R.attr.filter;
+import static android.R.attr.fragment;
 
 /**
  * Created by rachelmunoz on 7/21/17.
@@ -43,6 +47,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 	private String mCurrentFilter = ALL_FILTER;
 
 	private boolean mSubtitleVisible;
+	private File mPhotoFile;
 
 	public interface Callbacks {
 		void onImageThoughtSelected(ImageThought imageThought);
@@ -171,7 +176,6 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		private ImageThought mImageThought;
 		private TextView mImageThoughtTitle;
 
-		private File mPhotoFile;
 
 		public ImageThoughtHolder(LayoutInflater inflater, ViewGroup parent){
 			super(inflater.inflate(getViewHolderResId(), parent, false));
@@ -205,6 +209,11 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 				mImageThoughtTitle.setText(mImageThought.getTitle());
 			}
 
+
+		}
+
+		public void setImageThought(ImageThought imageThought) {
+			mImageThought = imageThought;
 		}
 	}
 
@@ -225,7 +234,16 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		@Override
 		public void onBindViewHolder(ImageThoughtHolder holder, int position) {
 			ImageThought imageThought = mImageThoughts.get(position);
-			holder.bind(imageThought);
+			holder.setImageThought(imageThought);
+
+			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
+// 			holder.bind(imageThought);
+			ImageView iv = holder.mImageThoughtImageView;
+			Glide.with(getActivity().getApplicationContext())
+					.load(mPhotoFile)
+					.apply(new RequestOptions()
+							.placeholder(getResources().getDrawable(R.drawable.ic_photo_black)))
+					.into(iv);
 		}
 
 		@Override

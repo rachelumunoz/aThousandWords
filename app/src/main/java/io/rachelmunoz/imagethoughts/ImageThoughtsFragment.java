@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +34,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -40,6 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static android.R.attr.path;
 import static android.os.Environment.DIRECTORY_PICTURES;
 import static android.os.Environment.getExternalStoragePublicDirectory;
 
@@ -254,8 +259,18 @@ public class ImageThoughtsFragment extends Fragment {
 			mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
 		} else {
 			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+
+
 			mImageThoughtImageView.setImageBitmap(bitmap);
 		}
+//		mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
+// 			holder.bind(imageThought);
+//		ImageView iv = holder.mImageThoughtImageView;
+		Glide.with(getActivity().getApplicationContext())
+				.load(mPhotoFile)
+				.apply(new RequestOptions()
+						.placeholder(getResources().getDrawable(R.drawable.ic_photo_black)))
+				.into(mImageThoughtImageView);
 	}
 
 }

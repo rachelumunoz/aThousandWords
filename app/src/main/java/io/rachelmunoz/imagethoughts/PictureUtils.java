@@ -7,6 +7,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
+import android.util.Log;
+
+import java.io.IOException;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by rachelmunoz on 7/24/17.
