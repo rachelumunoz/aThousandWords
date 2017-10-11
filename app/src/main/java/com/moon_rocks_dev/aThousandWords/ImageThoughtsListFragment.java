@@ -1,4 +1,4 @@
-package io.rachelmunoz.imageThoughts;
+package com.moon_rocks_dev.aThousandWords;
 
 import android.content.Context;
 import android.content.res.Configuration;
