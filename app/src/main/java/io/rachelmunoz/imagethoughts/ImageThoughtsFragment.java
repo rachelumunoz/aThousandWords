@@ -1,4 +1,4 @@
-package io.rachelmunoz.imagethoughts;
+package io.rachelmunoz.imageThoughts;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,20 +6,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ExifInterface;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,21 +26,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
-import static android.R.attr.path;
-import static android.os.Environment.DIRECTORY_PICTURES;
-import static android.os.Environment.getExternalStoragePublicDirectory;
 
 /**
  * Created by rachelmunoz on 7/14/17.
@@ -190,8 +176,6 @@ public class ImageThoughtsFragment extends Fragment {
 			}
 		});
 
-
-
 		PackageManager packageManager = getActivity().getPackageManager();
 		mCameraButton = (Button) view.findViewById(R.id.camera_button);
 		final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -205,7 +189,7 @@ public class ImageThoughtsFragment extends Fragment {
 				Uri uri =
 						FileProvider.getUriForFile(
 							getActivity(),
-							"io.rachelmunoz.imagethoughts.fileprovider",
+							"io.rachelmunoz.imageThoughts.fileprovider",
 							mPhotoFile
 						);
 
@@ -241,7 +225,7 @@ public class ImageThoughtsFragment extends Fragment {
 		}
 
 		if (requestCode == REQUEST_PHOTO){
-			Uri uri = FileProvider.getUriForFile(getActivity(), "io.rachelmunoz.imagethoughts.fileprovider", mPhotoFile);
+			Uri uri = FileProvider.getUriForFile(getActivity(), "io.rachelmunoz.imageThoughts.fileprovider", mPhotoFile);
 			getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
 			updateImageThought();
@@ -255,17 +239,17 @@ public class ImageThoughtsFragment extends Fragment {
 	}
 
 	private void updatePhotoView(){
-		if (mPhotoFile == null || !mPhotoFile.exists()){
-			mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
-		} else {
-			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
-
-
-			mImageThoughtImageView.setImageBitmap(bitmap);
-		}
-//		mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
-// 			holder.bind(imageThought);
-//		ImageView iv = holder.mImageThoughtImageView;
+//		if (mPhotoFile == null || !mPhotoFile.exists()){
+//			mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
+//		} else {
+//			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+//
+//
+//			mImageThoughtImageView.setImageBitmap(bitmap);
+//		}
+////		mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
+//// 			holder.bind(imageThought);
+////		ImageView iv = holder.mImageThoughtImageView;
 		Glide.with(getActivity().getApplicationContext())
 				.load(mPhotoFile)
 				.apply(new RequestOptions()

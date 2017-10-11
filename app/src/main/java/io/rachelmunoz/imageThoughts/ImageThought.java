@@ -1,4 +1,4 @@
-package io.rachelmunoz.imagethoughts;
+package io.rachelmunoz.imageThoughts;
 
 import android.text.format.DateFormat;
 

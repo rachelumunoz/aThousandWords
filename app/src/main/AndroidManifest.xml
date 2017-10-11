@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="io.rachelmunoz.imagethoughts">
+          package="io.rachelmunoz.imageThoughts">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,18 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ImageThoughtsListActivity">
+        <activity android:name="io.rachelmunoz.imageThoughts.ImageThoughtsListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ImageThoughtsActivity">
+        <activity android:name="io.rachelmunoz.imageThoughts.ImageThoughtsActivity">
         </activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="io.rachelmunoz.imagethoughts.fileprovider"
+            android:authorities="io.rachelmunoz.imageThoughts.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
