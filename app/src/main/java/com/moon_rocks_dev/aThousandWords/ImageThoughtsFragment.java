@@ -1,4 +1,4 @@
-package io.rachelmunoz.imageThoughts;
+package com.moon_rocks_dev.aThousandWords;
 
 
 import android.widget.EditText;
@@ -27,14 +27,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -193,7 +191,7 @@ public class ImageThoughtsFragment extends Fragment {
 				Uri uri =
 						FileProvider.getUriForFile(
 							getActivity(),
-							"io.rachelmunoz.imageThoughts.fileprovider",
+							"com.moon_rocks_dev.aThousandWords.fileprovider",
 							mPhotoFile
 						);
 
@@ -229,7 +227,7 @@ public class ImageThoughtsFragment extends Fragment {
 		}
 
 		if (requestCode == REQUEST_PHOTO){
-			Uri uri = FileProvider.getUriForFile(getActivity(), "io.rachelmunoz.imageThoughts.fileprovider", mPhotoFile);
+			Uri uri = FileProvider.getUriForFile(getActivity(), "com.moon_rocks_dev.aThousandWords.fileprovider", mPhotoFile);
 			getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
 			updateImageThought();

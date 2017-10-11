@@ -1,4 +1,4 @@
-package io.rachelmunoz.imageThoughts;
+package com.moon_rocks_dev.aThousandWords;
 
 
 import android.app.Activity;

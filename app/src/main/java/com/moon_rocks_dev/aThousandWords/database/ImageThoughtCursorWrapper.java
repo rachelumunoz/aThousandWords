@@ -1,4 +1,4 @@
-package io.rachelmunoz.imageThoughts.database;
+package com.moon_rocks_dev.aThousandWords.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
@@ -6,9 +6,9 @@ import android.database.CursorWrapper;
 import java.util.Date;
 import java.util.UUID;
 
-import io.rachelmunoz.imageThoughts.ImageThought;
+import com.moon_rocks_dev.aThousandWords.ImageThought;
 
-import static io.rachelmunoz.imageThoughts.database.ImageThoughtDbSchema.*;
+import static com.moon_rocks_dev.aThousandWords.database.ImageThoughtDbSchema.*;
 
 /**
  * Created by rachelmunoz on 7/23/17.

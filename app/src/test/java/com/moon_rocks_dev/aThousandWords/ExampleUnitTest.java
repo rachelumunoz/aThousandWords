@@ -1,4 +1,4 @@
-package io.rachelmunoz.imageThoughts;
+package com.moon_rocks_dev.aThousandWords;
 
 import org.junit.Test;
 
