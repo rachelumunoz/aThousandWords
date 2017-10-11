@@ -1,4 +1,4 @@
-package com.moon_rocks_dev.aThousandWords;
+package io.rachelmunoz.imageThoughts;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.moon_rocks_dev.aThousandWords.database.ImageThoughtBaseHelper;
-import com.moon_rocks_dev.aThousandWords.database.ImageThoughtCursorWrapper;
-import com.moon_rocks_dev.aThousandWords.database.ImageThoughtDbSchema.ImageThoughtTable;
+import io.rachelmunoz.imageThoughts.database.ImageThoughtBaseHelper;
+import io.rachelmunoz.imageThoughts.database.ImageThoughtCursorWrapper;
+import io.rachelmunoz.imageThoughts.database.ImageThoughtDbSchema.ImageThoughtTable;
 
 /**
  * Created by rachelmunoz on 7/21/17.

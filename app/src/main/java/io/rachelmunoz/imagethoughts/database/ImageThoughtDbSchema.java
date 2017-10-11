@@ -1,4 +1,4 @@
-package com.moon_rocks_dev.aThousandWords.database;
+package io.rachelmunoz.imageThoughts.database;
 
 /**
  * Created by rachelmunoz on 7/23/17.

@@ -1,10 +1,10 @@
-package com.moon_rocks_dev.aThousandWords.database;
+package io.rachelmunoz.imageThoughts.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.moon_rocks_dev.aThousandWords.database.ImageThoughtDbSchema.ImageThoughtTable;
+import io.rachelmunoz.imageThoughts.database.ImageThoughtDbSchema.ImageThoughtTable;
 
 /**
  * Created by rachelmunoz on 7/23/17.

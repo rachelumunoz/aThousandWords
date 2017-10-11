@@ -1,11 +1,15 @@
-package com.moon_rocks_dev.aThousandWords;
+package io.rachelmunoz.imageThoughts;
+
+
+import android.widget.EditText;
+
+import java.io.File;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -43,8 +47,8 @@ public class ImageThoughtsFragment extends Fragment {
 	static final String ARG_IMAGE_THOUGHT_ID = "imageThought_id";
 	private static final int REQUEST_PHOTO = 0;
 	private static final String TAG = "ImageThoughtsFragment";
-	private ImageThought mImageThought;
 	private File mPhotoFile;
+	private ImageThought mImageThought;
 
 	private EditText mImageThoughtEditText;
 	private EditText mTitleEditText;
@@ -176,8 +180,6 @@ public class ImageThoughtsFragment extends Fragment {
 			}
 		});
 
-
-
 		PackageManager packageManager = getActivity().getPackageManager();
 		mCameraButton = (Button) view.findViewById(R.id.camera_button);
 		final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -191,7 +193,7 @@ public class ImageThoughtsFragment extends Fragment {
 				Uri uri =
 						FileProvider.getUriForFile(
 							getActivity(),
-							"io.rachelmunoz.imagethoughts.fileprovider",
+							"io.rachelmunoz.imageThoughts.fileprovider",
 							mPhotoFile
 						);
 
@@ -227,7 +229,7 @@ public class ImageThoughtsFragment extends Fragment {
 		}
 
 		if (requestCode == REQUEST_PHOTO){
-			Uri uri = FileProvider.getUriForFile(getActivity(), "io.rachelmunoz.imagethoughts.fileprovider", mPhotoFile);
+			Uri uri = FileProvider.getUriForFile(getActivity(), "io.rachelmunoz.imageThoughts.fileprovider", mPhotoFile);
 			getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
 			updateImageThought();
@@ -241,17 +243,17 @@ public class ImageThoughtsFragment extends Fragment {
 	}
 
 	private void updatePhotoView(){
-		if (mPhotoFile == null || !mPhotoFile.exists()){
-			mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
-		} else {
-			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
-
-
-			mImageThoughtImageView.setImageBitmap(bitmap);
-		}
-//		mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
-// 			holder.bind(imageThought);
-//		ImageView iv = holder.mImageThoughtImageView;
+//		if (mPhotoFile == null || !mPhotoFile.exists()){
+//			mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
+//		} else {
+//			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+//
+//
+//			mImageThoughtImageView.setImageBitmap(bitmap);
+//		}
+////		mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
+//// 			holder.bind(imageThought);
+////		ImageView iv = holder.mImageThoughtImageView;
 		Glide.with(getActivity().getApplicationContext())
 				.load(mPhotoFile)
 				.apply(new RequestOptions()

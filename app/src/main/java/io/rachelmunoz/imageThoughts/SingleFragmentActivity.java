@@ -1,4 +1,7 @@
-package com.moon_rocks_dev.aThousandWords;
+package io.rachelmunoz.imageThoughts;
+
+import android.support.v7.app.AppCompatActivity;
+
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;

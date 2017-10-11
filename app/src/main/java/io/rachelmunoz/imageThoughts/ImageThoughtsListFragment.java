@@ -1,4 +1,4 @@
-package com.moon_rocks_dev.aThousandWords;
+package io.rachelmunoz.imageThoughts;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -231,8 +231,8 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		@Override
 		public void onBindViewHolder(ImageThoughtHolder holder, int position) {
 			ImageThought imageThought = mImageThoughts.get(position);
-			holder.setImageThought(imageThought);
 
+			holder.setImageThought(imageThought);
 			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
 // 			holder.bind(imageThought);
 			ImageView iv = holder.mImageThoughtImageView;
