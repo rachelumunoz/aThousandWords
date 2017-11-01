@@ -1,7 +1,13 @@
-package com.moon_rocks_dev.aThousandWords;
+package com.moon_rocks_dev.aThousandWords.AcitivityList;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+
+import com.moon_rocks_dev.aThousandWords.ActivityMain.ImageThoughtsActivity;
+import com.moon_rocks_dev.aThousandWords.ActivityMain.ImageThoughtsFragment;
+import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThought;
+import com.moon_rocks_dev.aThousandWords.R;
+import com.moon_rocks_dev.aThousandWords.SingleFragmentActivity;
 
 /**
  * Created by rachelmunoz on 7/21/17.

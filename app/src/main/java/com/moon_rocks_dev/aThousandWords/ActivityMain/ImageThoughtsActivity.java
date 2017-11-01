@@ -1,13 +1,16 @@
-package com.moon_rocks_dev.aThousandWords;
+package com.moon_rocks_dev.aThousandWords.ActivityMain;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
+import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThought;
+import com.moon_rocks_dev.aThousandWords.SingleFragmentActivity;
+
 import java.util.UUID;
 
 public class ImageThoughtsActivity extends SingleFragmentActivity implements ImageThoughtsFragment.Callbacks {
-	private static final String EXTRA_IMAGE_THOUGHT_ID = "io.rachelmunoz.imagethoughts.extra_imagethought_id";
+	private static final String EXTRA_IMAGE_THOUGHT_ID = "com.moon_rocks_dev.aThousandWords.extra_imagethought_id";
 
 	@Override
 	public Fragment createFragment() {

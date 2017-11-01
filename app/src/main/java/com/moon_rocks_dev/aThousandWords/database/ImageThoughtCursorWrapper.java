@@ -6,7 +6,7 @@ import android.database.CursorWrapper;
 import java.util.Date;
 import java.util.UUID;
 
-import com.moon_rocks_dev.aThousandWords.ImageThought;
+import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThought;
 
 import static com.moon_rocks_dev.aThousandWords.database.ImageThoughtDbSchema.*;
 

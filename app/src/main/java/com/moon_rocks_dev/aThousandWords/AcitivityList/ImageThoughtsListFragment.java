@@ -1,4 +1,4 @@
-package com.moon_rocks_dev.aThousandWords;
+package com.moon_rocks_dev.aThousandWords.AcitivityList;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -20,6 +20,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.moon_rocks_dev.aThousandWords.DynamicRecyclerView;
+import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThought;
+import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThoughtLab;
+import com.moon_rocks_dev.aThousandWords.PictureUtils;
+import com.moon_rocks_dev.aThousandWords.R;
 
 import java.io.File;
 import java.util.List;
@@ -230,17 +235,20 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 		@Override
 		public void onBindViewHolder(ImageThoughtHolder holder, int position) {
+			ImageView iv = holder.mImageThoughtImageView;
+//			Glide.with(getActivity().getApplicationContext()).clear(iv);
 			ImageThought imageThought = mImageThoughts.get(position);
-
 			holder.setImageThought(imageThought);
 			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
-// 			holder.bind(imageThought);
-			ImageView iv = holder.mImageThoughtImageView;
-			Glide.with(getActivity().getApplicationContext())
-					.load(mPhotoFile)
-					.apply(new RequestOptions()
-							.placeholder(getResources().getDrawable(R.drawable.ic_photo_black)))
-					.into(iv);
+//
+//
+//
+ 			holder.bind(imageThought);
+//			Glide.with(getActivity())
+//					.load(mPhotoFile)
+//					.apply(new RequestOptions()
+//							.placeholder(getResources().getDrawable(R.drawable.ic_photo_black)))
+//					.into(iv);
 		}
 
 		@Override

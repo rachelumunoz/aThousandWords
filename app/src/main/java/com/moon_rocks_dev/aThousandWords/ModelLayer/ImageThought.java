@@ -1,4 +1,4 @@
-package com.moon_rocks_dev.aThousandWords;
+package com.moon_rocks_dev.aThousandWords.ModelLayer;
 
 import android.text.format.DateFormat;
 

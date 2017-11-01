@@ -1,6 +1,7 @@
-package com.moon_rocks_dev.aThousandWords;
+package com.moon_rocks_dev.aThousandWords.ActivityMain;
 
 
+import android.graphics.Bitmap;
 import android.widget.EditText;
 
 import java.io.File;
@@ -32,6 +33,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThought;
+import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThoughtLab;
+import com.moon_rocks_dev.aThousandWords.PictureUtils;
+import com.moon_rocks_dev.aThousandWords.R;
 
 import java.util.List;
 import java.util.UUID;
@@ -191,7 +196,7 @@ public class ImageThoughtsFragment extends Fragment {
 				Uri uri =
 						FileProvider.getUriForFile(
 							getActivity(),
-							"com.moon_rocks_dev.aThousandWords.fileprovider",
+								getActivity().getPackageName() +".fileprovider",
 							mPhotoFile
 						);
 
@@ -227,7 +232,7 @@ public class ImageThoughtsFragment extends Fragment {
 		}
 
 		if (requestCode == REQUEST_PHOTO){
-			Uri uri = FileProvider.getUriForFile(getActivity(), "com.moon_rocks_dev.aThousandWords.fileprovider", mPhotoFile);
+			Uri uri = FileProvider.getUriForFile(getActivity(),  getActivity().getPackageName() +".fileprovider", mPhotoFile);
 			getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
 			updateImageThought();
@@ -241,22 +246,18 @@ public class ImageThoughtsFragment extends Fragment {
 	}
 
 	private void updatePhotoView(){
-//		if (mPhotoFile == null || !mPhotoFile.exists()){
-//			mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
-//		} else {
-//			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
-//
-//
-//			mImageThoughtImageView.setImageBitmap(bitmap);
-//		}
-////		mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
-//// 			holder.bind(imageThought);
-////		ImageView iv = holder.mImageThoughtImageView;
-		Glide.with(getActivity().getApplicationContext())
-				.load(mPhotoFile)
-				.apply(new RequestOptions()
-						.placeholder(getResources().getDrawable(R.drawable.ic_photo_black)))
-				.into(mImageThoughtImageView);
+		if (mPhotoFile == null || !mPhotoFile.exists()){
+			mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
+		} else {
+			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+			mImageThoughtImageView.setImageBitmap(bitmap);
+		}
+//		Glide.with(getActivity().getApplicationContext()).clear(mImageThoughtImageView);
+//		Glide.with(getActivity())
+//				.load(mPhotoFile)
+//				.apply(new RequestOptions()
+//						.placeholder(getResources().getDrawable(R.drawable.ic_photo_black)))
+//				.into(mImageThoughtImageView);
 	}
 
 }
