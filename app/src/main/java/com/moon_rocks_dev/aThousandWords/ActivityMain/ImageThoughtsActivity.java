@@ -3,8 +3,10 @@ package com.moon_rocks_dev.aThousandWords.ActivityMain;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThought;
+import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThoughtLab;
 import com.moon_rocks_dev.aThousandWords.SingleFragmentActivity;
 
 import java.util.UUID;
@@ -28,7 +30,6 @@ public class ImageThoughtsActivity extends SingleFragmentActivity implements Ima
 
 	@Override
 	public void onImageThoughtUpdated(ImageThought imageThought) {
-			//
 	}
 
 	@Override

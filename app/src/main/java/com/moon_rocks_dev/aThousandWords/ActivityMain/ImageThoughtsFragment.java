@@ -33,11 +33,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.MediaStoreSignature;
 import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThought;
 import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThoughtLab;
 import com.moon_rocks_dev.aThousandWords.PictureUtils;
 import com.moon_rocks_dev.aThousandWords.R;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -129,7 +131,7 @@ public class ImageThoughtsFragment extends Fragment {
 
 		mImageThoughtEditText = (EditText) view.findViewById(R.id.imageThought_text);
 
-		String imageThoughText= mImageThought.getThought();
+		String imageThoughText = mImageThought.getThought();
 
 		// if imageThoughtText is empty, put descirption, else use thought
 		mImageThoughtEditText.setText(mImageThought.getThought());
@@ -196,7 +198,7 @@ public class ImageThoughtsFragment extends Fragment {
 				Uri uri =
 						FileProvider.getUriForFile(
 							getActivity(),
-								getActivity().getPackageName() +".fileprovider",
+								"com.moon_rocks_dev.aThousandWords.fileprovider",
 							mPhotoFile
 						);
 
@@ -232,7 +234,7 @@ public class ImageThoughtsFragment extends Fragment {
 		}
 
 		if (requestCode == REQUEST_PHOTO){
-			Uri uri = FileProvider.getUriForFile(getActivity(),  getActivity().getPackageName() +".fileprovider", mPhotoFile);
+			Uri uri = FileProvider.getUriForFile(getActivity(),  "com.moon_rocks_dev.aThousandWords.fileprovider", mPhotoFile);
 			getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
 			updateImageThought();
@@ -240,8 +242,8 @@ public class ImageThoughtsFragment extends Fragment {
 		}
 	}
 
-	private void updateImageThought(){  // when stuff changed in RecyclerView
-		ImageThoughtLab.get(getActivity()).updateImageThought(mImageThought);
+	private void updateImageThought(){  // when stuff changed in RecyclerView in tablet
+		ImageThoughtLab.get(getActivity()).updateImageThought(mImageThought); // for DB
 		mCallbacks.onImageThoughtUpdated(mImageThought);
 	}
 
@@ -249,15 +251,14 @@ public class ImageThoughtsFragment extends Fragment {
 		if (mPhotoFile == null || !mPhotoFile.exists()){
 			mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
 		} else {
-			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
-			mImageThoughtImageView.setImageBitmap(bitmap);
+//			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+//			mImageThoughtImageView.setImageBitmap(bitmap);
+			Glide.with(getActivity())
+					.load(mPhotoFile)
+					.apply(new RequestOptions()
+							.placeholder(getResources().getDrawable(R.drawable.ic_photo_black))
+							.signature(new MediaStoreSignature("image/jpeg", new java.util.Date().getTime(),0)))
+					.into(mImageThoughtImageView);
 		}
-//		Glide.with(getActivity().getApplicationContext()).clear(mImageThoughtImageView);
-//		Glide.with(getActivity())
-//				.load(mPhotoFile)
-//				.apply(new RequestOptions()
-//						.placeholder(getResources().getDrawable(R.drawable.ic_photo_black)))
-//				.into(mImageThoughtImageView);
 	}
-
 }

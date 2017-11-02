@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.MediaStoreSignature;
 import com.moon_rocks_dev.aThousandWords.DynamicRecyclerView;
 import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThought;
 import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThoughtLab;
@@ -194,7 +195,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 			setImageThoughtCompleteBundleArg(mImageThought.isThoughtComplete());
 		}
 
-		public void bind(ImageThought imageThought){ // binds data each imageThought to UI
+		public void bind(ImageThought imageThought, ImageView v){ // binds data each imageThought to UI
 			mImageThought = imageThought;
 			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(mImageThought);
 
@@ -202,10 +203,15 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 			if (mPhotoFile == null || !mPhotoFile.exists()){
 				mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
 			} else {
-				Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
-				mImageThoughtImageView.setImageBitmap(bitmap);
+//				Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+//				mImageThoughtImageView.setImageBitmap(bitmap);
+				Glide.with(getActivity())
+						.load(mPhotoFile)
+						.apply(new RequestOptions()
+								.placeholder(getResources().getDrawable(R.drawable.ic_photo_black))
+								.signature(new MediaStoreSignature("image/jpeg", new java.util.Date().getTime(),0)))
+						.into(v);
 			}
-
 
 			if (mImageThoughtTitle != null){
 				mImageThoughtTitle.setText(mImageThought.getTitle());
@@ -236,19 +242,18 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		@Override
 		public void onBindViewHolder(ImageThoughtHolder holder, int position) {
 			ImageView iv = holder.mImageThoughtImageView;
-//			Glide.with(getActivity().getApplicationContext()).clear(iv);
+
 			ImageThought imageThought = mImageThoughts.get(position);
+
 			holder.setImageThought(imageThought);
 			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
-//
-//
-//
- 			holder.bind(imageThought);
-//			Glide.with(getActivity())
-//					.load(mPhotoFile)
-//					.apply(new RequestOptions()
-//							.placeholder(getResources().getDrawable(R.drawable.ic_photo_black)))
-//					.into(iv);
+
+ 			holder.bind(imageThought, iv);
+
+
+
+
+
 		}
 
 		@Override
