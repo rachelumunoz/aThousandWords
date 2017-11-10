@@ -58,6 +58,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 	public interface Callbacks {
 		void onImageThoughtSelected(ImageThought imageThought);
+
 		void updateList(String currentFilter);
 	}
 
@@ -73,7 +74,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		mCallbacks = (Callbacks) context;
 	}
 
-	public static ImageThoughtsListFragment newInstance(){
+	public static ImageThoughtsListFragment newInstance() {
 		Bundle args = new Bundle();
 		args.putSerializable(ARGS_LIST_FILTER_TYPE, ALL_FILTER);
 
@@ -110,7 +111,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()){
+		switch (item.getItemId()) {
 			case R.id.new_entry:
 				ImageThought imageThought = new ImageThought();
 				ImageThoughtLab.get(getActivity()).addImageThought(imageThought);
@@ -121,7 +122,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 			case R.id.completed:
 				// toggle filter type  -- refactor to case statement when more filters are added
-				if (mCurrentFilter == COMPLETE_FILTER){
+				if (mCurrentFilter == COMPLETE_FILTER) {
 					setCurrentFilter(ALL_FILTER);
 				} else {
 					setCurrentFilter(COMPLETE_FILTER);
@@ -133,7 +134,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 				// recreate menu
 				getActivity().invalidateOptionsMenu();
 //				updateUI(mCurrentFilter); // gets filtered ImageThoughts
-											// need to remove fragment if in tablet view-- callbacks?
+				// need to remove fragment if in tablet view-- callbacks?
 				mCallbacks.updateList(mCurrentFilter);
 
 				return true;
@@ -150,13 +151,13 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler_view);
 
 		Configuration config = getResources().getConfiguration(); // set different RecyclerView LayoutManager for phone vs tablet
-		if (config.smallestScreenWidthDp < 600){
-			mRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 3));
+		if (config.smallestScreenWidthDp < 600) {
+			mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 		} else {
 			mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		}
 
-		if(savedInstanceState != null){
+		if (savedInstanceState != null) {
 			mSubtitleVisible = savedInstanceState.getBoolean(SAVED_COMPLETED_VISIBLE);
 		}
 
@@ -171,7 +172,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		inflater.inflate(R.menu.fragment_image_thoughts_list, menu);
 
 		MenuItem subtitleItem = menu.findItem(R.id.completed);
-		if (mCurrentFilter == COMPLETE_FILTER){
+		if (mCurrentFilter == COMPLETE_FILTER) {
 			subtitleItem.setTitle(R.string.not_completed);
 		} else {
 			subtitleItem.setTitle(R.string.completed);
@@ -184,7 +185,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		private TextView mImageThoughtTitle;
 
 
-		public ImageThoughtHolder(LayoutInflater inflater, ViewGroup parent){
+		public ImageThoughtHolder(LayoutInflater inflater, ViewGroup parent) {
 			super(inflater.inflate(getViewHolderResId(), parent, false));
 			itemView.setOnClickListener(this);
 
@@ -199,23 +200,26 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 			setImageThoughtCompleteBundleArg(mImageThought.isThoughtComplete());
 		}
 
-		public void bind(ImageThought imageThought, ImageView v){ // binds data each imageThought to UI
+		public void bind(ImageThought imageThought, ImageView v) { // binds data each imageThought to UI
 			mImageThought = imageThought;
 			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(mImageThought);
 
 			// repeats from ImageThoughtsFragment -- logic from updatePhotoView()
-			if (mPhotoFile == null || !mPhotoFile.exists()){
+			if (mPhotoFile == null || !mPhotoFile.exists()) {
 				mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
 			} else {
 				Glide.with(getActivity())
 						.load(mPhotoFile)
 						.apply(new RequestOptions()
 								.placeholder(getResources().getDrawable(R.drawable.ic_photo_black))
-								.signature(new MediaStoreSignature("image/jpeg", new java.util.Date().getTime(),0)))
+								.signature(new MediaStoreSignature("image/jpeg", new java.util.Date().getTime(), 0)))
 						.into(v);
 			}
 
-			if (mImageThoughtTitle != null){
+			mImageThoughtImageView.setAdjustViewBounds(true);
+			mImageThoughtImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+			if (mImageThoughtTitle != null) {
 				mImageThoughtTitle.setText(mImageThought.getTitle());
 			}
 
@@ -223,10 +227,10 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		}
 	}
 
-	private class ImageThoughtAdapter extends RecyclerView.Adapter<ImageThoughtHolder>{
+	private class ImageThoughtAdapter extends RecyclerView.Adapter<ImageThoughtHolder> {
 		private List<ImageThought> mImageThoughts;
 
-		public ImageThoughtAdapter(List<ImageThought> imageThoughts){
+		public ImageThoughtAdapter(List<ImageThought> imageThoughts) {
 			mImageThoughts = imageThoughts;
 		}
 
@@ -241,7 +245,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 			ImageView iv = holder.mImageThoughtImageView;
 			ImageThought imageThought = mImageThoughts.get(position);
 			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
- 			holder.bind(imageThought, iv);
+			holder.bind(imageThought, iv);
 		}
 
 		@Override
@@ -249,16 +253,16 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 			return mImageThoughts.size();
 		}
 
-		public void setImageThoughts(List<ImageThought>imageThoughts){
+		public void setImageThoughts(List<ImageThought> imageThoughts) {
 			mImageThoughts = imageThoughts;
 		}
 	}
 
-	public void updateUI(String currentFilter){  // string filterType
+	public void updateUI(String currentFilter) {  // string filterType
 		ImageThoughtLab imageThoughtLab = ImageThoughtLab.get(getActivity());
 		List<ImageThought> imageThoughts = imageThoughtLab.getImageThoughts(currentFilter);
 
-		if (mAdapter == null){ //on Activity recreate?
+		if (mAdapter == null) { //on Activity recreate?
 			mAdapter = new ImageThoughtAdapter(imageThoughts);
 			mRecyclerView.setAdapter(mAdapter);
 		} else {
@@ -267,22 +271,22 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		}
 	}
 
-	public void setCurrentFilter(String filter){
+	public void setCurrentFilter(String filter) {
 		mCurrentFilter = filter;
 		setFilterBundleArg(filter);
 	}
 
-	private void setFilterBundleArg(String filter){
+	private void setFilterBundleArg(String filter) {
 		Bundle args = this.getArguments();
 		args.putSerializable(ARGS_LIST_FILTER_TYPE, filter);
 	}
 
-	private void setImageThoughtCompleteBundleArg(boolean complete){
+	private void setImageThoughtCompleteBundleArg(boolean complete) {
 		Bundle args = this.getArguments();
 		args.putSerializable(ARGS_IT_COMPLETE, complete);
 	}
 
-	public String getCurrentFilter(){
+	public String getCurrentFilter() {
 		return mCurrentFilter;
 	}
 }
