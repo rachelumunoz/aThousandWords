@@ -37,8 +37,6 @@ public class ImageThoughtsListActivity extends SingleFragmentActivity implements
 			String filter = listFragment.getArguments().getString(ImageThoughtsListFragment.ARGS_LIST_FILTER_TYPE);
 
 			boolean complete = listFragment.getArguments().getBoolean(ImageThoughtsListFragment.ARGS_IT_COMPLETE);
-//			Log.d(TAG, "the current filter selected is " + filter);
-//			Log.d(TAG, "current imageThought is complete: " + complete);
 
 			switch(filter){
 				case ImageThoughtsListFragment.ALL_FILTER:

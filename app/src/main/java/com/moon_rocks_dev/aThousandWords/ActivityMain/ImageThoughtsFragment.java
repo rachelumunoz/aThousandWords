@@ -36,10 +36,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.MediaStoreSignature;
 import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThought;
 import com.moon_rocks_dev.aThousandWords.ModelLayer.ImageThoughtLab;
-import com.moon_rocks_dev.aThousandWords.PictureUtils;
 import com.moon_rocks_dev.aThousandWords.R;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -251,8 +249,6 @@ public class ImageThoughtsFragment extends Fragment {
 		if (mPhotoFile == null || !mPhotoFile.exists()){
 			mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
 		} else {
-//			Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
-//			mImageThoughtImageView.setImageBitmap(bitmap);
 			Glide.with(getActivity())
 					.load(mPhotoFile)
 					.apply(new RequestOptions()

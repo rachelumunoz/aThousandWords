@@ -7,7 +7,7 @@ android {
         applicationId "com.moon_rocks_dev.aThousandWords"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 1
+        versionCode 2
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -37,5 +37,4 @@ dependencies {
         // Excludes the support library because it's already included by Glide.
         transitive = false
     }
-
 }

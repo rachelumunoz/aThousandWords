@@ -35,21 +35,25 @@ import java.util.List;
  */
 
 public class ImageThoughtsListFragment extends Fragment implements DynamicRecyclerView {
-	// completed or all
 	private static final String SAVED_COMPLETED_VISIBLE = "completed";
+
 	public static final String ARGS_LIST_FILTER_TYPE = "ImageThoughtsListFilter";
 	public static final String ARGS_IT_COMPLETE = "ImageThoughtComplete";
 
 	public static final String ALL_FILTER = "all";
+
 	public static final String COMPLETE_FILTER = "completed";
 
 	private RecyclerView mRecyclerView;
+
 	private ImageThoughtAdapter mAdapter;
+
 	private Callbacks mCallbacks;
 
 	private String mCurrentFilter = ALL_FILTER;
 
 	private boolean mSubtitleVisible;
+
 	private File mPhotoFile;
 
 	public interface Callbacks {
@@ -116,7 +120,7 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 				return true;
 
 			case R.id.completed:
-				// toggle filter type
+				// toggle filter type  -- refactor to case statement when more filters are added
 				if (mCurrentFilter == COMPLETE_FILTER){
 					setCurrentFilter(ALL_FILTER);
 				} else {
@@ -203,8 +207,6 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 			if (mPhotoFile == null || !mPhotoFile.exists()){
 				mImageThoughtImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black));
 			} else {
-//				Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
-//				mImageThoughtImageView.setImageBitmap(bitmap);
 				Glide.with(getActivity())
 						.load(mPhotoFile)
 						.apply(new RequestOptions()
@@ -219,10 +221,6 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 
 		}
-
-		public void setImageThought(ImageThought imageThought) {
-			mImageThought = imageThought;
-		}
 	}
 
 	private class ImageThoughtAdapter extends RecyclerView.Adapter<ImageThoughtHolder>{
@@ -235,25 +233,15 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 		@Override
 		public ImageThoughtHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 			LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-
 			return new ImageThoughtHolder(layoutInflater, parent);
 		}
 
 		@Override
 		public void onBindViewHolder(ImageThoughtHolder holder, int position) {
 			ImageView iv = holder.mImageThoughtImageView;
-
 			ImageThought imageThought = mImageThoughts.get(position);
-
-			holder.setImageThought(imageThought);
 			mPhotoFile = ImageThoughtLab.get(getActivity()).getPhotoFile(imageThought);
-
  			holder.bind(imageThought, iv);
-
-
-
-
-
 		}
 
 		@Override
@@ -281,7 +269,6 @@ public class ImageThoughtsListFragment extends Fragment implements DynamicRecycl
 
 	public void setCurrentFilter(String filter){
 		mCurrentFilter = filter;
-
 		setFilterBundleArg(filter);
 	}
 
