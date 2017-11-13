@@ -12,4 +12,4 @@ This Android app allows you to:
 
 Play with the Beta version: https://play.google.com/apps/testing/com.moon_rocks_dev.aThousandWords
 
-Check out the Trello Board: https://trello.com/b/4epajiBO
+Check out the Trello Board: https://trello.com/b/4yPJIigJ
